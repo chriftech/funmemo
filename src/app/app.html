@@ -1,28 +1,46 @@
-<nz-layout class="app-layout">
-  <div class="h-screen w-screen bg-[radial-gradient(circle,_#F200FF4D,_#EBFBFF)]">
-    <div class="flex justify-center">
 
-      <nav class="flex justify-center" style="
-    width: 52.06rem;
-    height: 5.13rem;
-    top: 3.63rem;
-    left: 21.13rem;
-    opacity: 1;
-  ">
-        <div
-          class="w-full h-full backdrop-blur-lg bg-white/40 flex items-center justify-between px-6 rounded-xl shadow-lg">
-          <!-- Logo -->
-          <div class="text-xl font-bold text-gray-800">Solutios</div>
+<div class="h-full w-full px-20 bg-[radial-gradient(circle,_#F200FF4D,_#EBFBFF)]">
+  <div class="flex justify-between items-center pt-8 gap-[2rem] pb-24">
+    <img src="logo.svg" alt="" class="w-40">
+    <nav class="flex justify-center items-center opacity-[0.9]">
+      <div
+        class="w-full h-full backdrop-blur-lg py-5 gap-12 bg-white/40 flex items-center justify-between px-6 rounded-xl shadow-lg">
 
-          <div class="flex space-x-6">
-            <a href="#" class="text-gray-700 hover:text-purple-600">Home</a>
-            <a href="#" class="text-gray-700 hover:text-purple-600">About</a>
-            <a href="#" class="text-gray-700 hover:text-purple-600">Services</a>
-            <a href="#" class="text-gray-700 hover:text-purple-600">Contact</a>
-          </div>
+        <div class="text-xl font-bold text-gray-800">Solution</div>
+
+        <div class="flex space-x-5 gap-1 text-xl">
+          <a href="#" class="text-gray-800 hover:text-purple-600">Home</a>
+          <a href="#" class="text-gray-800 hover:text-purple-600">Memories</a>
+          <a href="#" class="text-gray-800 hover:text-purple-600">How it works</a>
+          <a href="#" class="text-gray-800 hover:text-purple-600">Pricing</a>
         </div>
-      </nav>
+        <a href="#" class="text-gray-700 hover:text-purple-600 text-xl">Login</a>
+      </div>
+    </nav>
+    <div class="px-4 text-xl">
+      <p class="cursor-pointer">Menu</p>
     </div>
-    <h1 class="text-4xl font-bold text-gray-800">Radical Gradient Page 🚀</h1>
   </div>
-</nz-layout>
+  <div class="px-30">
+    <div class="flex justify-between items-center text-[12pt] font-bold pb-2 border-b border-b-gray-300">
+      <p>MEMORIES</p>
+      <button class="bg-purple-500 px-4 rounded-full text-white">Upload</button>
+    </div>
+
+    <div class="w-full flex justify-evenly mt-7">
+      <div class="grid grid-cols-4 gap-10">
+        @for(memory of [1,2,3,4,5,6,7,8,9,10,3,4,5,6,7,8,9,10,2,3,4,5,6,7,8,9,10,3,4,5,6,7,8,9,10]; track memory) {
+          <img
+            nz-image
+            width="200px"
+            height="200px"
+            nzSrc="https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png"
+            alt=""
+            class="border-solid shadow-2xl rounded-md"
+          />
+        }
+      </div>
+    </div>
+  </div>
+
+</div>
