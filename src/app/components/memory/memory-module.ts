@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule,  } from '@angular/forms';
 import { CommonModule } from '@angular/common';
-import { MemoryUpload } from './memory-upload';
+import { Settings } from './settings';
 import { NzImageModule } from 'ng-zorro-antd/image';
 import { NzButtonModule } from 'ng-zorro-antd/button';
 import { MemoryListing } from './memory-listing';
@@ -17,7 +17,7 @@ import { CoreModule } from '../../../lib/shared-components/core-module';
 
 @NgModule({
   declarations: [
-    MemoryUpload,
+    Settings,
     MemoryListing,
   ],
   imports: [
@@ -40,7 +40,7 @@ import { CoreModule } from '../../../lib/shared-components/core-module';
     CoreModule
   ],
   exports: [
-    MemoryUpload,
+    Settings,
     MemoryListing
   ],
 })

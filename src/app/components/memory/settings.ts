@@ -1,15 +1,15 @@
 import { Component } from '@angular/core';
 
 @Component({
-  selector: 'mi-memory-upload',
+  selector: 'mi-settings',
   standalone: false,
   template: `
     <p>
-      memory-upload works!
+      addsettings here
     </p>
   `,
   styles: ``
 })
-export class MemoryUpload {
+export class Settings {
 
 }
