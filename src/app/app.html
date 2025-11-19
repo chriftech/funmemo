@@ -1,46 +1,53 @@
 
-<div class="h-full w-full px-20 bg-[radial-gradient(circle,_#F200FF4D,_#EBFBFF)]">
-  <div class="flex justify-between items-center pt-8 gap-[2rem] pb-24">
-    <img src="logo.svg" alt="" class="w-40">
-    <nav class="flex justify-center items-center opacity-[0.9]">
-      <div
-        class="w-full h-full backdrop-blur-lg py-5 gap-12 bg-white/40 flex items-center justify-between px-6 rounded-xl shadow-lg">
+<div class="flex bg-white justify-between py-2 pt-5 items-center  gap-[2rem] px-6">
+  <img src="logo.svg" alt="Logo" [class]="collapsed ? 'h-8' : 'h-12' + ' animate-bounce'"/>
+  <div class="lg:xl:flex justify-center items-center opacity-[0.9] hidden lg:xl:visible">
+  <div class="h-full backdrop-blur-lg py-5 gap-12 flex items-center justify-between px-6 rounded-xl shadow-lg">
+    <div class="text-xl font-bold text-gray-800">Home</div>
 
-        <div class="text-xl font-bold text-gray-800">Solution</div>
-
-        <div class="flex space-x-5 gap-1 text-xl">
-          <a href="#" class="text-gray-800 hover:text-purple-600">Home</a>
-          <a href="#" class="text-gray-800 hover:text-purple-600">Memories</a>
-          <a href="#" class="text-gray-800 hover:text-purple-600">How it works</a>
-          <a href="#" class="text-gray-800 hover:text-purple-600">Pricing</a>
-        </div>
-        <a href="#" class="text-gray-700 hover:text-purple-600 text-xl">Login</a>
-      </div>
-    </nav>
-    <div class="px-4 text-xl">
-      <p class="cursor-pointer">Menu</p>
+    <div class="flex space-x-5 gap-1 text-md">
+      <a class="text-gray-800 hover:text-purple-600">Memories</a>
+      <a class="text-gray-800 hover:text-purple-600">About us</a>
+      <a class="text-gray-800 hover:text-purple-600">Pricing</a>
     </div>
+
+    <a class="text-gray-700 hover:text-purple-600 text-lg">Login</a>
   </div>
-  <div class="px-30">
-    <div class="flex justify-between items-center text-[12pt] font-bold pb-2 border-b border-b-gray-300">
-      <p>MEMORIES</p>
-      <button class="bg-purple-500 px-4 rounded-full text-white">Upload</button>
-    </div>
-
-    <div class="w-full flex justify-evenly mt-7">
-      <div class="grid grid-cols-4 gap-10">
-        @for(memory of [1,2,3,4,5,6,7,8,9,10,3,4,5,6,7,8,9,10,2,3,4,5,6,7,8,9,10,3,4,5,6,7,8,9,10]; track memory) {
-          <img
-            nz-image
-            width="200px"
-            height="200px"
-            nzSrc="https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png"
-            alt=""
-            class="border-solid shadow-2xl rounded-md"
-          />
-        }
-      </div>
-    </div>
-  </div>
-
 </div>
+  <button (click)="toggleSidebar()" class="cursor-pointer -mr-[15rem] flex justify-center items-center p-2">
+    <nz-icon class="trigger" [nzType]="collapsed ? 'menu-unfold' : 'menu-fold'" />
+  </button>
+</div>
+
+<nz-layout class="!bg-white">
+  @if(!collapsed){
+    <nz-sider [nzCollapsedWidth]="110" class="!bg-gray-200 !shadow-2xl !shadow-blue-300 !w-[300px] !h-full sm::invisible visible bottom-0 top-0" nzCollapsible [(nzCollapsed)]="collapsed" [nzWidth]="150" [nzTrigger]="null">
+      <div class="fixed justify-between h-full"> 
+        <ul nz-menu class="!bg-gray-20 h-full" nzMode="inline">
+          <li nz-menu-item>
+            <nz-icon nzType="ordered-list" />
+            <span class="font-bold">Memories</span>
+          </li>
+          <li nz-menu-item>
+            <nz-icon nzType="file" />
+            <span class="font-bold">Pricing</span>
+          </li>
+          <li nz-menu-item>
+            <nz-icon nzType="ordered-list" />
+            <span class="font-bold">About us</span>
+          </li>
+          <li nz-menu-item>
+            <nz-icon nzType="phone" />
+            <span class="font-bold">Contact us</span>
+          </li>
+        </ul>
+      </div>
+    </nz-sider>
+  }
+  <nz-layout>
+    <nz-content class="b-white">
+      <router-outlet></router-outlet>
+    </nz-content>
+    <nz-footer>Ant Design © Implement By Angular</nz-footer>
+  </nz-layout>
+</nz-layout>
