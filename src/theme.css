@@ -1,1 +1,13 @@
 @import "../node_modules/ng-zorro-antd/ng-zorro-antd.css";
+
+.ant-image-preview-img-wrapper {
+    display: flex !important;
+    justify-content: center !important;
+    margin-top: 6.5% !important;
+    width: 100% !important;
+    height: 80% !important;
+}
+
+.ant-layout-sider-children {
+    width: 4rem !important;
+}

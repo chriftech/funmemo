@@ -1,6 +1,6 @@
 // tailwind.config.js
 module.exports = {
-  content: ["./src/**/*.{html,ts}"],
+  content: ['./src/**/*.{html,ts}'],
   theme: {
     extend: {
       backgroundImage: {
@@ -9,4 +9,4 @@ module.exports = {
     },
   },
   plugins: [],
-}
+};
