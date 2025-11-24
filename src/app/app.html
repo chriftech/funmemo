@@ -1,19 +1,18 @@
-
-<div class="flex bg-white justify-between py-2 pt-5 items-center  gap-[2rem] px-6">
-  <img src="logo.svg" alt="Logo" [class]="collapsed ? 'h-8' : 'h-12' + ' animate-bounce'"/>
+<div class="flex bg-white justify-between py-2 pt-5 items-center  gap-[2rem] px-6 border-b border-b-gray-200 mb-10">
+  <img src="logo.svg" alt="Logo" [class]="collapsed ? 'h-9' : 'h-10'" />
   <div class="lg:xl:flex justify-center items-center opacity-[0.9] hidden lg:xl:visible">
-  <div class="h-full backdrop-blur-lg py-5 gap-12 flex items-center justify-between px-6 rounded-xl shadow-lg">
-    <div class="text-xl font-bold text-gray-800">Home</div>
+    <div class="h-full backdrop-blur-lg py-5 gap-12 flex items-center justify-between px-6 rounded-xl shadow-lg">
+      <div class="text-xl font-bold text-gray-800">Home</div>
 
-    <div class="flex space-x-5 gap-1 text-md">
-      <a class="text-gray-800 hover:text-purple-600">Memories</a>
-      <a class="text-gray-800 hover:text-purple-600">About us</a>
-      <a class="text-gray-800 hover:text-purple-600">Pricing</a>
+      <div class="flex space-x-5 gap-1 text-[14pt]">
+        <a class="text-gray-800 hover:text-purple-600">Memories</a>
+        <a class="text-gray-800 hover:text-purple-600">About us</a>
+        <a class="text-gray-800 hover:text-purple-600">Pricing</a>
+      </div>
+
+      <a class="text-gray-700 hover:text-purple-600 text-lg">Login</a>
     </div>
-
-    <a class="text-gray-700 hover:text-purple-600 text-lg">Login</a>
   </div>
-</div>
   <button (click)="toggleSidebar()" class="cursor-pointer -mr-[15rem] flex justify-center items-center p-2">
     <nz-icon class="trigger" [nzType]="collapsed ? 'menu-unfold' : 'menu-fold'" />
   </button>
@@ -21,9 +20,10 @@
 
 <nz-layout class="!bg-white">
   @if(!collapsed){
-    <nz-sider [nzCollapsedWidth]="110" class="!bg-gray-200 !shadow-2xl !shadow-blue-300 !w-[300px] !h-full sm::invisible visible bottom-0 top-0" nzCollapsible [(nzCollapsed)]="collapsed" [nzWidth]="200" [nzTrigger]="null">
-      <div class="fixed justify-between h-full"> 
-        <ul nz-menu class="!bg-gray-20 h-full !border-none" nzMode="inline">
+    <nz-sider [nzCollapsedWidth]="110"
+      class="!shadow-2xl fixed !bg-white !border-r !shadow-blue-300 !w-[300px] !h-screen sm::invisible visible bottom-0 top-0"
+      nzCollapsible [(nzCollapsed)]="collapsed" [nzWidth]="200" [nzTrigger]="null">
+        <ul nz-menu class="!bg-gray-20 h-full !fixed !w-[12.5rem]" nzMode="inline">
           <li nz-menu-item>
             <nz-icon nzType="ordered-list" />
             <span class="font-bold">Memories</span>
@@ -40,14 +40,19 @@
             <nz-icon nzType="phone" />
             <span class="font-bold">Contact us</span>
           </li>
+          <li nz-menu-item class="bottom-0">
+            <nz-icon nzType="phone" />
+            <span class="font-bold">Contact us</span>
+          </li>
         </ul>
-      </div>
     </nz-sider>
   }
-  <nz-layout>
-    <nz-content class="b-white">
-      <router-outlet></router-outlet>
+  <nz-layout class="">
+    <nz-content class="bg-white md:lg:xl:px-[20rem]">
+      <router-outlet ></router-outlet>
+      <div class="py-5 flex justify-center bg-gray-400">
+        <p>Ant Design © Implement By Angular</p>
+      </div>
     </nz-content>
-    <nz-footer>Ant Design © Implement By Angular</nz-footer>
   </nz-layout>
 </nz-layout>

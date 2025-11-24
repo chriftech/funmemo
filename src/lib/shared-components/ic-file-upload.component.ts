@@ -40,14 +40,7 @@ const getBase64 = (file: File): Promise<string | ArrayBuffer | null> =>
   standalone: false,
 })
 export class IcFileUploadComponent {
-  fileList: NzUploadFile[] = [
-    {
-      uid: '-1',
-      name: 'image.png',
-      status: 'done',
-      url: 'https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png'
-    },
-  ];
+  fileList: NzUploadFile[] = [];
   previewImage: string | undefined = '';
   previewVisible = false;
 

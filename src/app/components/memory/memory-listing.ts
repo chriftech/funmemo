@@ -4,35 +4,46 @@ import { Component } from '@angular/core';
   selector: 'mi-memory-listing',
   standalone: false,
   template: `
-    <div class=" mt-10 px-5">
-      
-      <div class="flex justify-between items-center pb-4 border-b border-gray-200">
-        <h2 class="text-xl font-bold tracking-wide">Memories</h2>
+    <div class=" px-5 pb-5 h-screen overflow-y-scroll">
+    
+      <div class="flex gap-4 justify-between items-center border-b border-gray-200">
+          <p class="text-xl font-bold !mt-4">Gallery</p>
+        <div class="w-full">
+          <input nz-input [(ngModel)]="value" placeholder="find image" class="!rounded-xl !text-lg !text-gray-600" />
+        </div>
         <button
           nz-button
           (click)="uploadMemory()"
-          class="bg-[#937be2] hover:bg-[#7b64c7] text-white font-medium rounded-lg px-4 py-1"
+          nzType="primary"
+          
+          class="text-white !rounded-[0.3rem] font-bold px-4 py-1"
         >
-          Upload
+          <nz-icon class="trigger" [nzType]="'upload'" /> Upload
         </button>
       </div>
 
-      <div class="grid grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-6 mt-8">
-        @for (memory of memories; track memory) {
-          <div class="bg-white shadow-md rounded-lg overflow-hidden hover:shadow-xl transition-shadow duration-300">
-            <div class="flex justify-center">
+      <div class="grid grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-2 md:lg:xl:gap-4 mt-8">
+        @for (memory of memories; track memory.index) {
+          <div class="bg-white shadow-md rounded-lg overflow-hidden hover:shadow-xl hover:shadow-gray-400 transition-shadow duration-300">
+            <div class="relative">
               <img
                 nz-image
                 width="100%"
-                nzSrc="https://plus.unsplash.com/premium_photo-1664474619075-644dd191935f?fm=jpg&q=60&w=3000&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MXx8aW1hZ2V8ZW58MHx8MHx8fDA%3D"
+                nzSrc="https://plus.unsplash.com/premium_photo-1664474619075-644dd191935f?fm=jpg&q=60&w=3000"
                 alt="Memory"
                 class="cursor-pointer object-cover w-full h-32 xl:lg:md:h-52 transition-transform duration-300"
               />
+
+              <div class="absolute top-2 right-2 bg-white/90 opacity-[0.8] p-1 rounded-full shadow cursor-pointer">
+                <nz-icon nzType="more"></nz-icon>
+              </div>
             </div>
 
-            <div class="p-3">
-              <p class="text-sm font-semibold text-gray-700">Memory {{ memory }}</p>
-              <p class="text-xs text-gray-500">Added recently</p>
+            <div class="p-3 pb-0">
+              <div class="flex justify-between items-start">
+                <p class="text-sm text-gray-700 responsive-text">{{ memory.createdAt }}</p>
+                <nz-icon nzType="folder" class="cursor-pointer text-lg text-green-400"></nz-icon>
+              </div>
             </div>
           </div>
         }
@@ -81,11 +92,32 @@ export class MemoryListing {
 
   proofOfPayment!: File;
   show = false;
+  value = ''
 
-  memories = [11, 13, 41, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25];
+  memories = [
+    { index: 11, createdAt: new Date().toDateString() },
+    { index: 12, createdAt: new Date().toDateString() },
+    { index: 13, createdAt: new Date().toDateString() },
+    { index: 14, createdAt: new Date().toDateString() },
+    { index: 15, createdAt: new Date().toDateString() },
+    { index: 16, createdAt: new Date().toDateString() },
+    { index: 17, createdAt: new Date().toDateString() },
+    { index: 18, createdAt: new Date().toDateString() },
+    { index: 19, createdAt: new Date().toDateString() },
+    { index: 21, createdAt: new Date().toDateString() },
+    { index: 22, createdAt: new Date().toDateString() },
+    { index: 23, createdAt: new Date().toDateString() },
+    { index: 24, createdAt: new Date().toDateString() },
+    { index: 25, createdAt: new Date().toDateString() },
+    { index: 26, createdAt: new Date().toDateString() },
+  ];
 
   uploadMemory(): void {
     this.isVisible = true;
+  }
+
+  onSearch(event: any): void {
+    console.log(event);
   }
 
   handleOk(): void {

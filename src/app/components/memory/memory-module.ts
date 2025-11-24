@@ -14,7 +14,6 @@ import { NzInputModule } from 'ng-zorro-antd/input';
 import { NzUploadModule } from 'ng-zorro-antd/upload';
 import { NzSwitchModule } from 'ng-zorro-antd/switch';
 import { CoreModule } from '../../../lib/shared-components/core-module';
-
 @NgModule({
   declarations: [
     Settings,
