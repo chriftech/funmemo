@@ -17,14 +17,14 @@ import { Component } from '@angular/core';
         </button>
       </div>
 
-      <div class="grid grid-cols-1 md:grid-cols-3 xl:grid-cols-4 gap-6 mt-8">
+      <div class="grid grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-6 mt-8">
         @for (memory of memories; track memory) {
           <div class="bg-white shadow-md rounded-lg overflow-hidden hover:shadow-xl transition-shadow duration-300">
             <div class="flex justify-center">
               <img
                 nz-image
                 width="100%"
-                height="100%"
+                height="100%" 
                 nzSrc="https://plus.unsplash.com/premium_photo-1664474619075-644dd191935f?fm=jpg&q=60&w=3000&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MXx8aW1hZ2V8ZW58MHx8MHx8fDA%3D"
                 alt="Memory"
                 class="cursor-pointer object-cover w-full h-52 transition-transform duration-300"

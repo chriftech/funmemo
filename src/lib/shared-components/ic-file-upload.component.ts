@@ -18,6 +18,8 @@ const getBase64 = (file: File): Promise<string | ArrayBuffer | null> =>
       [nzShowButton]="fileList.length < 8"
       [nzPreview]="handlePreview"
       class="flex"
+      nzAccept="image/*"
+      nzCapture="environment"
     >
       <div>
         <nz-icon nzType="plus" />
