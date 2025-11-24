@@ -4,7 +4,7 @@ import { Component } from '@angular/core';
   selector: 'mi-memory-listing',
   standalone: false,
   template: `
-    <div class="py-6 mt-10 px-5">
+    <div class=" mt-10 px-5">
       
       <div class="flex justify-between items-center pb-4 border-b border-gray-200">
         <h2 class="text-xl font-bold tracking-wide">Memories</h2>
@@ -24,10 +24,9 @@ import { Component } from '@angular/core';
               <img
                 nz-image
                 width="100%"
-                height="100%" 
                 nzSrc="https://plus.unsplash.com/premium_photo-1664474619075-644dd191935f?fm=jpg&q=60&w=3000&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MXx8aW1hZ2V8ZW58MHx8MHx8fDA%3D"
                 alt="Memory"
-                class="cursor-pointer object-cover w-full h-52 transition-transform duration-300"
+                class="cursor-pointer object-cover w-full h-32 xl:lg:md:h-52 transition-transform duration-300"
               />
             </div>
 
