@@ -30,6 +30,7 @@
     "@angular/router": "^20.2.0",
     "@aws-sdk/client-s3": "^3.934.0",
     "@tailwindcss/postcss": "^4.1.13",
+    "lightgallery": "^2.9.0",
     "ng-zorro-antd": "^20.3.1",
     "ngx-confetti-explosion": "^4.0.1",
     "postcss": "^8.5.6",
