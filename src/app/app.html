@@ -14,42 +14,38 @@
     </div>
   </div>
   <button (click)="toggleSidebar()" class="cursor-pointer -mr-[15rem] flex justify-center items-center p-2">
-    <nz-icon class="trigger" [nzType]="collapsed ? 'menu-unfold' : 'menu-fold'" />
+    <nz-icon class="trigger text-lg" [nzType]="collapsed ? 'menu-unfold' : 'menu-fold'" />
   </button>
 </div>
 
 <nz-layout class="!bg-white">
-  @if(!collapsed){
-    <nz-sider [nzCollapsedWidth]="110"
-      class="!shadow-2xl fixed !bg-white !border-r !shadow-blue-300 !w-[300px] !h-screen sm::invisible visible bottom-0 top-0"
-      nzCollapsible [(nzCollapsed)]="collapsed" [nzWidth]="200" [nzTrigger]="null">
-        <ul nz-menu class="!bg-gray-20 h-full !fixed !w-[12.5rem]" nzMode="inline">
-          <li nz-menu-item>
-            <nz-icon nzType="ordered-list" />
-            <span class="font-bold">Memories</span>
-          </li>
-          <li nz-menu-item>
-            <nz-icon nzType="file" />
-            <span class="font-bold">Pricing</span>
-          </li>
-          <li nz-menu-item>
-            <nz-icon nzType="ordered-list" />
-            <span class="font-bold">About us</span>
-          </li>
-          <li nz-menu-item>
-            <nz-icon nzType="phone" />
-            <span class="font-bold">Contact us</span>
-          </li>
-          <li nz-menu-item class="bottom-0">
-            <nz-icon nzType="phone" />
-            <span class="font-bold">Contact us</span>
-          </li>
-        </ul>
-    </nz-sider>
-  }
+  <nz-sider [nzCollapsedWidth]="0"
+    class="!shadow-2xl fixed !bg-white !border-r !shadow-blue-300 !w-[300px] !h-screen sm::invisible visible bottom-0 top-0"
+    nzCollapsible [(nzCollapsed)]="collapsed" [nzWidth]="0" [nzTrigger]="null">
+    <ul nz-menu class="!bg-gray-20 h-full !bg-white !fixed !w-[10.5rem]" nzMode="inline">
+      <li nz-menu-item>
+        <nz-icon nzType="ordered-list" />
+        <span class="font-bold">Memories</span>
+      </li>
+      <li nz-menu-item>
+        <nz-icon nzType="file" />
+        <span class="font-bold">Pricing</span>
+      </li>
+      <li nz-menu-item>
+        <nz-icon nzType="ordered-list" />
+        <span class="font-bold">About us</span>
+      </li>
+      <li nz-menu-item>
+        <nz-icon nzType="phone" />
+        <span class="font-bold">Contact us</span>
+      </li>
+    </ul>
+  </nz-sider>
   <nz-layout class="">
-    <nz-content class="bg-white md:lg:xl:px-[20rem]">
-      <router-outlet ></router-outlet>
+    <nz-content class="bg-white md:lg:xl:px-[10rem]">
+      <div class="md:lg:xl:flex">
+        <router-outlet></router-outlet>
+      </div>
       <div class="py-5 flex justify-center bg-gray-400">
         <p>Ant Design © Implement By Angular</p>
       </div>
