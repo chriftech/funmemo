@@ -14,6 +14,9 @@ import { NzInputModule } from 'ng-zorro-antd/input';
 import { NzUploadModule } from 'ng-zorro-antd/upload';
 import { NzSwitchModule } from 'ng-zorro-antd/switch';
 import { CoreModule } from '../../../lib/shared-components/core-module';
+import { NzDropDownModule } from 'ng-zorro-antd/dropdown';
+import { NzTabsModule } from 'ng-zorro-antd/tabs';
+
 @NgModule({
   declarations: [
     Settings,
@@ -36,7 +39,9 @@ import { CoreModule } from '../../../lib/shared-components/core-module';
     NzInputModule,
     NzUploadModule,
     NzSwitchModule,
-    CoreModule
+    CoreModule,
+    NzDropDownModule,
+    NzTabsModule
   ],
   exports: [
     Settings,
