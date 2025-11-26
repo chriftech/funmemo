@@ -41,7 +41,7 @@ import { NzTabsModule } from 'ng-zorro-antd/tabs';
     NzSwitchModule,
     CoreModule,
     NzDropDownModule,
-    NzTabsModule
+    NzTabsModule,
   ],
   exports: [
     Settings,

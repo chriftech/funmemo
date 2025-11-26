@@ -6,8 +6,22 @@ import { ActivatedRoute, Router } from '@angular/router';
   standalone: false,
   template: `
 <div class=" px-5 pb-5 flex z-0">
-  <div class="bg-gray-400 p-3 w-[20rem]">
-    Filters here
+  <div class="bg-gray-100 p-3 w-[20rem]">
+    <div class="text-center">
+      <p class="text-[14pt] border-b pb-4.5 border-b-gray-200 font-semibold !mt-1.5 text-gray-500">
+        Find My Image
+      </p>
+    </div>
+    <div class="grid gap-2">
+      <p>date range field</p>
+      <div class="flex justify-between items-center border-b border-b-gray-200">
+      
+        <p class="text-[12pt]">Select All</p>
+        <div><input type="checkbox" class="border bg-white size-4" /></div>
+      </div>
+      <input class="border bg-white" />
+      <input class="border bg-white" />
+    </div>
   </div>
   <div class="px-5 border-t border-t-gray-200 overflow-y-scroll h-screen shadow-blue-400 shadow-2xl pb-4">
 
@@ -20,7 +34,6 @@ import { ActivatedRoute, Router } from '@angular/router';
       </div>
     </div>
     <div class="flex gap-4 justify-between items-center border-b border-gray-200">
-
       <p class="text-xl blur-none font-bold !mt-4 z-0">Gallery</p>
       <button type="button" (click)="uploadMemory()" [ngClass]="{
         '!text-white !py-2 bg-gradient-to-br from-pink-300 to-blue-500 hover:bg-gradient-to-bl focus:ring-2 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800 font-medium rounded-base text-sm px-4 rounded-md cursor-pointer text-center leading-5 flex gap-1': true,
@@ -76,7 +89,7 @@ import { ActivatedRoute, Router } from '@angular/router';
           @for(folder of folders; track folder) {
           <a (click)="onFolderSelection(folder.name)" [ngClass]="{
                   'px-2 flex justify-between hover:!font-semibold !items-center !text-gray-700 hover:!shadow-xl hover:!shadow-green-300 hover:!text-green-400 border-b border-b-gray-200': true,
-                  '!shadow-xl !shadow-green-300 !text-green-400': currentFolder() === folder.name
+                  '!shadow-lg !shadow-green-300 !text-green-400': currentFolder() === folder.name
                 }">
             <p class="flex gap-5">
               <nz-icon [nzType]="folder.icon" />
@@ -180,8 +193,9 @@ export class MemoryListing implements OnInit {
     { index: 27, image: "https://images.unsplash.com/photo-1470071459604-3b5ec3a7fe05?q=60&w=800", createdAt: new Date().toDateString(), folder: 'branches' },
   ];
 
-  folders = [
+  folders: {name: string, icon: string, files: number}[] = [
     { name: 'General', icon: 'user', files: 120 },
+    { name: 'Edited', icon: 'branches', files: 10 },
     { name: 'Friends & Family', icon: 'user', files: 70 },
     { name: 'Travel', icon: 'branches', files: 10 },
     { name: 'Cosmetics', icon: 'branches', files: 20 },
@@ -191,8 +205,10 @@ export class MemoryListing implements OnInit {
   ]
 
   ngOnInit(): void {
-    this.currentFolder.set(this.activatedRoute.snapshot.queryParams['folder'])
-    console.log(this.currentFolder())
+    const folderParam = this.activatedRoute.snapshot.queryParams['folder']
+    if (folderParam){
+      this.currentFolder.set(folderParam)
+    }
 
 
     for (let index = 0; index < 6; index++) {
