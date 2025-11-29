@@ -16,6 +16,7 @@ import { NzSwitchModule } from 'ng-zorro-antd/switch';
 import { CoreModule } from '../../../lib/shared-components/core-module';
 import { NzDropDownModule } from 'ng-zorro-antd/dropdown';
 import { NzTabsModule } from 'ng-zorro-antd/tabs';
+import { NzDatePickerModule } from 'ng-zorro-antd/date-picker';
 import {CdkDrag, CdkDropList} from '@angular/cdk/drag-drop';
 
 @NgModule({
@@ -45,6 +46,7 @@ import {CdkDrag, CdkDropList} from '@angular/cdk/drag-drop';
     NzTabsModule,
     CdkDrag,
     CdkDropList,
+    NzDatePickerModule,
   ],
   exports: [
     Settings,

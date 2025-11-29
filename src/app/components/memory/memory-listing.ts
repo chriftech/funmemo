@@ -49,21 +49,19 @@ import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
   `,
   template: `
   <div class=" px-5 pb-5 lg:xl:flex lg:xl:justify-center lg:xl:z-0">
-    <div class="bg-gray-100 p-3 w-[20rem] hidden lg:xl:block">
-      <div class="text-center">
+    <div class="bg-gray-100 p-3 w-[22rem] hidden lg:xl:block">
+      <div class="text-start pl-1">
         <p class="text-[14pt] border-b pb-4.5 border-b-gray-200 font-semibold !mt-1.5 text-gray-500">
-          Find My Image
+          Search Gallery
         </p>
       </div>
       <div class="grid gap-2">
-        <p>date range field</p>
-
-        <div class="flex justify-between items-center border-b border-b-gray-200">
-        
+        <div class="flex justify-between text-gray-600 px-1 items-center border-b border-b-gray-200">
           <p class="text-[12pt]">Select All</p>
-          <div><input type="checkbox" class="border bg-white size-4" /></div>
+          <div><input type="checkbox" class="border bg-white size-4 -mt-12" /></div>
         </div>
-        <input class="border bg-white" />
+        <nz-range-picker [(ngModel)]="date" (ngModelChange)="onChange($event)"></nz-range-picker>
+
       </div>
     </div>
     <div class="px-5 border-t border-t-gray-200 overflow-y-scroll h-screen shadow-blue-400 shadow-2xl pb-4">
@@ -92,6 +90,11 @@ import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
           <div class="relative">
             <img nz-image appLongPress (longPress)="trigger()" width="100%" [nzSrc]="photo.image" alt="photo"
               class="cursor-pointer object-cover w-full h-32 xl:lg:md:h-52 transition-transform duration-300" />
+
+            <div
+              class="absolute top-2 left-2 opacity-[0.1] !hover:shadow-2xl !hover:shadow-green-400 p-1 px-2 cursor-pointer">
+              <input type="checkbox" class="border bg-white cursor-pointer size-4 -mt-12" />
+            </div>
 
             <div
               class="absolute top-2 right-2 bg-white/90 opacity-[0.5] !hover:shadow-2xl !hover:shadow-green-400 p-1 px-2 rounded-full   cursor-pointer">
@@ -209,6 +212,7 @@ export class MemoryListing implements OnInit {
   show = false;
   value = ''
   menu = ''
+  date = null;
   currentFolder: WritableSignal<null | string> = signal(null)
   isDOMLoaded: WritableSignal<boolean> = signal(false)
 
@@ -266,6 +270,10 @@ export class MemoryListing implements OnInit {
     this.folders = [...this.folders.map((folder) => {
       return {...folder, files: this.gallery.filter((photo) => photo.folder == folder.name).length}
     })]
+  }
+
+  onChange(result: Date[]): void {
+    console.log('onChange: ', result);
   }
 
   trigger() {
