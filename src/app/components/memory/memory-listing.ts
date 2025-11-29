@@ -1,6 +1,6 @@
 import { Component, inject, OnInit, signal, WritableSignal } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import {CdkDragDrop, moveItemInArray} from '@angular/cdk/drag-drop';
+import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
 
 @Component({
   selector: 'mi-memory-listing',
@@ -86,7 +86,7 @@ import {CdkDragDrop, moveItemInArray} from '@angular/cdk/drag-drop';
       </div>
 
       <div class="grid grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-2 md:lg:xl:gap-4 mt-8">
-        @for (photo of gallery; track photo.index) {
+        @for (photo of photoGallery; track photo.index) {
         <div
           class="bg-white shadow-md rounded-lg overflow-hidden hover:shadow-xl hover:shadow-green-300 transition-shadow duration-300">
           <div class="relative">
@@ -118,7 +118,7 @@ import {CdkDragDrop, moveItemInArray} from '@angular/cdk/drag-drop';
           <div class="p-3 pb-0">
             <div class="flex justify-between items-start">
               <p class="text-xs lg:xl:text-[11pt] text-gray-700 ">{{ photo.createdAt }}</p>
-              <nz-icon [nzType]="photo.folder" class="cursor-pointer text-lg text-green-400"></nz-icon>
+              <nz-icon [nzType]="photo.icon" class="cursor-pointer text-lg text-green-400"></nz-icon>
             </div>
           </div>
         </div>
@@ -130,13 +130,13 @@ import {CdkDragDrop, moveItemInArray} from '@angular/cdk/drag-drop';
         <nz-tab [nzTitle]="'Folders'">
           <div class="grid gap-2" cdkDropList (cdkDropListDropped)="drop($event)" >
             @for(folder of folders; track folder) {
-            <a (click)="onFolderSelection(folder.group)" [ngClass]="{
+            <a (click)="onFolderSelection(folder.name)" [ngClass]="{
                     'px-2 flex justify-between hover:!font-semibold !items-center !text-gray-700 hover:!shadow-xl hover:!shadow-green-300 hover:!text-green-400 border-b border-b-gray-200': true,
-                    '!shadow-lg !shadow-green-300 !text-green-400': currentFolder() === folder.group
+                    '!shadow-lg !shadow-green-300 !text-green-400': currentFolder() === folder.name
                   }" cdkDrag>
               <p class="flex gap-5">
                 <nz-icon [nzType]="folder.info.icon" />
-                {{folder.group}}
+                {{folder.name}}
               </p>
               <p class="">{{folder.info.files}}</p>
             </a>
@@ -200,7 +200,7 @@ import {CdkDragDrop, moveItemInArray} from '@angular/cdk/drag-drop';
 })
 export class MemoryListing implements OnInit {
   capture = true;
-  
+
 
   isVisible = false;
   isOkLoading = false;
@@ -216,58 +216,56 @@ export class MemoryListing implements OnInit {
   activatedRoute = inject(ActivatedRoute)
 
   gallery = [
-    { group: '', index: 11, image: "https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?q=60&w=800", createdAt: new Date().toDateString(), folder: 'branches' },
-    { group: '', index: 12, image: "https://images.unsplash.com/photo-1529626455594-4ff0802cfb7e?q=60&w=800", createdAt: new Date().toDateString(), folder: 'user' },
-    { group: '', index: 13, image: "https://images.unsplash.com/photo-1517705008128-361805f42e86?q=60&w=800", createdAt: new Date().toDateString(), folder: 'branches' },
-    { group: '', index: 14, image: "https://images.unsplash.com/photo-1487412912498-0447578fcca8?q=60&w=800", createdAt: new Date().toDateString(), folder: 'user' },
+    { isEdited: false, folder: 'Friends & Family', index: 11, image: "https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?q=60&w=800", createdAt: new Date().toDateString(), icon: 'branches' },
+    { isEdited: false, folder: 'Cosmetics', index: 12, image: "https://images.unsplash.com/photo-1529626455594-4ff0802cfb7e?q=60&w=800", createdAt: new Date().toDateString(), icon: 'user' },
+    { isEdited: false, folder: 'Friends & Family', index: 13, image: "https://images.unsplash.com/photo-1517705008128-361805f42e86?q=60&w=800", createdAt: new Date().toDateString(), icon: 'branches' },
+    { isEdited: true, folder: 'Friends & Family', index: 14, image: "https://images.unsplash.com/photo-1487412912498-0447578fcca8?q=60&w=800", createdAt: new Date().toDateString(), icon: 'user' },
 
-    { group: '', index: 15, image: "https://images.unsplash.com/photo-1535930749574-1399327ce78f?q=60&w=800", createdAt: new Date().toDateString(), folder: 'branches' },
-    { group: '', index: 16, image: "https://images.unsplash.com/photo-1519681393784-d120267933ba?q=60&w=800", createdAt: new Date().toDateString(), folder: 'branches' },
-    { group: '', index: 17, image: "https://images.unsplash.com/photo-1506765515384-028b60a970df?q=60&w=800", createdAt: new Date().toDateString(), folder: 'branches' },
-    { group: '', index: 18, image: "https://images.unsplash.com/photo-1432888498266-38ffec3eaf0a?q=60&w=800", createdAt: new Date().toDateString(), folder: 'branches' },
+    { isEdited: false, folder: 'Cosmetics', index: 15, image: "https://images.unsplash.com/photo-1535930749574-1399327ce78f?q=60&w=800", createdAt: new Date().toDateString(), icon: 'branches' },
+    { isEdited: false, folder: 'Friends & Family', index: 16, image: "https://images.unsplash.com/photo-1519681393784-d120267933ba?q=60&w=800", createdAt: new Date().toDateString(), icon: 'branches' },
+    { isEdited: true, folder: 'Cosmetics', index: 17, image: "https://images.unsplash.com/photo-1506765515384-028b60a970df?q=60&w=800", createdAt: new Date().toDateString(), icon: 'branches' },
+    { isEdited: false, folder: 'Cosmetics', index: 18, image: "https://images.unsplash.com/photo-1432888498266-38ffec3eaf0a?q=60&w=800", createdAt: new Date().toDateString(), icon: 'branches' },
 
-    { group: '', index: 19, image: "https://images.unsplash.com/photo-1519681393784-d120267933ba?q=60&w=800", createdAt: new Date().toDateString(), folder: 'branches' },
-    { group: '', index: 21, image: "https://images.unsplash.com/photo-1470071459604-3b5ec3a7fe05?q=60&w=800", createdAt: new Date().toDateString(), folder: 'branches' },
-    { group: '', index: 22, image: "https://images.unsplash.com/photo-1517705008128-361805f42e86?q=60&w=800", createdAt: new Date().toDateString(), folder: 'branches' },
-    { group: '', index: 23, image: "https://images.unsplash.com/photo-1535930749574-1399327ce78f?q=60&w=800", createdAt: new Date().toDateString(), folder: 'branches' },
+    { isEdited: false, folder: 'Tech Gadgets', index: 19, image: "https://images.unsplash.com/photo-1519681393784-d120267933ba?q=60&w=800", createdAt: new Date().toDateString(), icon: 'branches' },
+    { isEdited: false, folder: 'Tech Gadgets', index: 21, image: "https://images.unsplash.com/photo-1470071459604-3b5ec3a7fe05?q=60&w=800", createdAt: new Date().toDateString(), icon: 'branches' },
+    { isEdited: false, folder: 'Cosmetics', index: 22, image: "https://images.unsplash.com/photo-1517705008128-361805f42e86?q=60&w=800", createdAt: new Date().toDateString(), icon: 'branches' },
+    { isEdited: false, folder: 'Cosmetics', index: 23, image: "https://images.unsplash.com/photo-1535930749574-1399327ce78f?q=60&w=800", createdAt: new Date().toDateString(), icon: 'branches' },
 
-    { group: '', index: 24, image: "https://images.unsplash.com/photo-1507149833265-60c372daea22?q=60&w=800", createdAt: new Date().toDateString(), folder: 'branches' },
-    { group: '', index: 25, image: "https://images.unsplash.com/photo-1517705008128-361805f42e86?q=60&w=800", createdAt: new Date().toDateString(), folder: 'branches' },
-    { group: '', index: 26, image: "https://images.unsplash.com/photo-1503023345310-bd7c1de61c7d?q=60&w=800", createdAt: new Date().toDateString(), folder: 'user' },
-    { group: '', index: 27, image: "https://images.unsplash.com/photo-1470071459604-3b5ec3a7fe05?q=60&w=800", createdAt: new Date().toDateString(), folder: 'branches' },
+    { isEdited: false, folder: 'Tech Gadgets', index: 24, image: "https://images.unsplash.com/photo-1507149833265-60c372daea22?q=60&w=800", createdAt: new Date().toDateString(), icon: 'branches' },
+    { isEdited: true, folder: 'Tech Gadgets', index: 25, image: "https://images.unsplash.com/photo-1517705008128-361805f42e86?q=60&w=800", createdAt: new Date().toDateString(), icon: 'branches' },
+    { isEdited: false, folder: 'Friends & Family', index: 26, image: "https://images.unsplash.com/photo-1503023345310-bd7c1de61c7d?q=60&w=800", createdAt: new Date().toDateString(), icon: 'user' },
+    { isEdited: true, folder: 'Friends & Family', index: 27, image: "https://images.unsplash.com/photo-1470071459604-3b5ec3a7fe05?q=60&w=800", createdAt: new Date().toDateString(), icon: 'branches' },
   ];
 
-  folders: {group: string, info: {icon: string, files: number}}[] = [
+  photoGallery = this.gallery
+
+  folders: { name: string, info: { icon: string, files: number } }[] = [
     {
-      group: 'General', info: { icon: 'user', files: 120 },
+      name: 'General', info: { icon: 'user', files: 120 },
     },
     {
-      group: 'Edited', info: { icon: 'branches', files: 10 },
+      name: 'Edited', info: { icon: 'branches', files: 10 },
     },
     {
-      group: 'Friends & Family', info: { icon: 'user', files: 70 },
+      name: 'Friends & Family', info: { icon: 'user', files: 70 },
     },
     {
-      group: 'Cosmetics', info: { icon: 'branches', files: 20 },
+      name: 'Cosmetics', info: { icon: 'branches', files: 20 },
     },
     {
-      group: 'Tech Gadgets', info: { icon: 'branches', files: 10 },
+      name: 'Tech Gadgets', info: { icon: 'branches', files: 10 },
     },
   ]
 
   ngOnInit(): void {
     const folderParam = this.activatedRoute.snapshot.queryParams['folder']
-    if (folderParam){
+    if (folderParam) {
       this.currentFolder.set(folderParam)
     }
 
-
-    for (let index = 0; index < 6; index++) {
-      setTimeout(() => {
-        this.isDOMLoaded.set(!this.isDOMLoaded())
-      }, 100);
-    }
-    this.isDOMLoaded.set(false)
+    this.folders = [...this.folders.map((folder) => {
+      return {...folder, files: this.gallery.filter((photo) => photo.folder == folder.name).length}
+    })]
   }
 
   trigger() {
@@ -280,6 +278,20 @@ export class MemoryListing implements OnInit {
 
   onFolderSelection(folder_name: string) {
     this.currentFolder.set(folder_name);
+
+    switch (folder_name.toLowerCase()) {
+      case 'general':
+        this.photoGallery = this.gallery
+        break;
+
+      case 'edited':
+        this.photoGallery = this.gallery.filter((photo) => photo.isEdited)
+        break;
+
+      default:
+        this.photoGallery = this.gallery.filter((photo) => photo.folder == folder_name)
+        break;
+    }
     this.router.navigate([], {
       relativeTo: this.activatedRoute,
       queryParams: { folder: folder_name },
