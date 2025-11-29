@@ -144,7 +144,20 @@ import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
               <p class="">{{folder.info.files}}</p>
             </a>
             }
+            @if(createNewFolder){
+                <a [ngClass]="{
+                  'px-2 flex gap-1 justify-between !items-center !text-gray-500 border-b border-b-gray-200': true,
+                }">
+                <p class="flex gap-2">
+                  <nz-icon [nzType]="'folder'" />
+                  <input type="text" placeholder="folder name" class="border bg-white rounded-md px-2 -mt-12" />
+                </p>
+                <p class="">0</p>
+              </a>
+            }
+
             <a
+              (click)="onCreateFolder()"
               class="px-2 flex justify-between !items-center !text-gray-700 hover:!text-blue-400 border-b border-b-gray-200">
               <p><nz-icon nzType="plus-circle" /></p>
               <p class="flex gap-5">
@@ -213,6 +226,7 @@ export class MemoryListing implements OnInit {
   value = ''
   menu = ''
   date = null;
+  createNewFolder: boolean = false;
   currentFolder: WritableSignal<null | string> = signal(null)
   isDOMLoaded: WritableSignal<boolean> = signal(false)
 
@@ -274,6 +288,10 @@ export class MemoryListing implements OnInit {
 
   onChange(result: Date[]): void {
     console.log('onChange: ', result);
+  }
+
+  onCreateFolder() {
+    this.createNewFolder = !this.createNewFolder
   }
 
   trigger() {
