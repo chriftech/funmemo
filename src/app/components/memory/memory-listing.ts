@@ -84,7 +84,7 @@ import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
       </div>
 
       <div class="grid grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-2 md:lg:xl:gap-4 mt-8">
-        @for (photo of photoGallery; track photo.index) {
+        @for (photo of photoGallery; track photo) {
         <div
           class="bg-white shadow-md rounded-lg overflow-hidden hover:shadow-xl hover:shadow-green-300 transition-shadow duration-300">
           <div class="relative">
@@ -145,26 +145,28 @@ import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
             </a>
             }
             @if(createNewFolder){
-                <a [ngClass]="{
-                  'px-2 flex gap-1 justify-between !items-center !text-gray-500 border-b border-b-gray-200': true,
-                }">
-                <p class="flex gap-2">
-                  <nz-icon [nzType]="'folder'" />
-                  <input type="text" placeholder="folder name" class="border bg-white rounded-md px-2 -mt-12" />
-                </p>
-                <p class="">0</p>
+              <div class="flex items-center">
+                <a class="px-2 flex gap-1 justify-between items-center !text-gray-500 border-b border-b-gray-200">
+                  <p class="flex gap-2">
+                    <nz-icon [nzType]="'folder'" />
+                    <input type="text" [ngModel]="folderName()" (ngModelChange)="onFolderNameChange($event)" minlength="1" maxlength="25" placeholder="folder name" class="text-center border bg-white rounded-md px-2 -mt-12" />
+                  </p>
+                  <button (click)="onSaveFolder()" class="!bg-green-300 cursor-pointer flex py-1 !-mt-1 px-1 rounded-md text-white">
+                    <nz-icon class="!text-white" nzType="check" />
+                  </button>
               </a>
+              </div>
             }
 
-            <a
-              (click)="onCreateFolder()"
-              class="px-2 flex justify-between !items-center !text-gray-700 hover:!text-blue-400 border-b border-b-gray-200">
-              <p><nz-icon nzType="plus-circle" /></p>
-              <p class="flex gap-5">
-                Create new folder
-              </p>
-              <p class="">1</p>
-            </a>
+            @if(!createNewFolder){
+              <a
+                (click)="onCreateFolder()"
+                class="px-2 flex justify-center items-center !text-gray-700 hover:!text-blue-400 border-b border-b-gray-200">
+                <p class="flex gap-5">
+                  Create folder
+                </p>
+              </a>
+            }
           </div>
         </nz-tab>
         <nz-tab [nzTitle]="'Stats'" class="text-end">
@@ -226,6 +228,7 @@ export class MemoryListing implements OnInit {
   value = ''
   menu = ''
   date = null;
+  folderName: WritableSignal<string> = signal('')
   createNewFolder: boolean = false;
   currentFolder: WritableSignal<null | string> = signal(null)
   isDOMLoaded: WritableSignal<boolean> = signal(false)
@@ -280,14 +283,17 @@ export class MemoryListing implements OnInit {
     if (folderParam) {
       this.currentFolder.set(folderParam)
     }
-
-    this.folders = [...this.folders.map((folder) => {
+    this.folders = this.folders.map((folder) => {
       return {...folder, files: this.gallery.filter((photo) => photo.folder == folder.name).length}
-    })]
+    })
   }
 
   onChange(result: Date[]): void {
     console.log('onChange: ', result);
+  }
+
+  onFolderNameChange(name: string): void {
+    this.folderName.set(name)
   }
 
   onCreateFolder() {
@@ -296,6 +302,17 @@ export class MemoryListing implements OnInit {
 
   trigger() {
     console.log('LONG PRESS')
+  }
+
+  onSaveFolder() {
+    if (this.folderName()){
+      this.folders = [...this.folders, {
+        name: this.folderName(), 
+        info: { icon: 'folder', files: 0 },
+      }]
+      this.createNewFolder = false
+      this.folderName.set('')
+    }
   }
 
   drop(event: CdkDragDrop<string[]>) {
