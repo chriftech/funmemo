@@ -18,6 +18,7 @@ import { NzDropDownModule } from 'ng-zorro-antd/dropdown';
 import { NzTabsModule } from 'ng-zorro-antd/tabs';
 import { NzDatePickerModule } from 'ng-zorro-antd/date-picker';
 import {CdkDrag, CdkDropList} from '@angular/cdk/drag-drop';
+import { WebcamModule } from "ngx-webcam";
 
 @NgModule({
   declarations: [
@@ -25,6 +26,7 @@ import {CdkDrag, CdkDropList} from '@angular/cdk/drag-drop';
     MemoryListing,
   ],
   imports: [
+    NzSwitchModule,
     FormsModule,
     CommonModule,
     NzImageModule,
@@ -36,18 +38,18 @@ import {CdkDrag, CdkDropList} from '@angular/cdk/drag-drop';
     RouterOutlet,
     NzImageModule,
     NzLayoutModule,
-    ReactiveFormsModule, 
-    NzFormModule, 
+    ReactiveFormsModule,
+    NzFormModule,
     NzInputModule,
     NzUploadModule,
-    NzSwitchModule,
     CoreModule,
     NzDropDownModule,
     NzTabsModule,
     CdkDrag,
     CdkDropList,
     NzDatePickerModule,
-  ],
+    WebcamModule
+],
   exports: [
     Settings,
     MemoryListing
