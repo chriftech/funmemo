@@ -1,6 +1,8 @@
 import { Component, inject, OnInit, signal, WritableSignal } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
+import { Observable, Subject } from 'rxjs';
+import { WebcamImage } from 'ngx-webcam';
 
 @Component({
   selector: 'mi-memory-listing',
@@ -46,6 +48,10 @@ import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
   .example-box:last-child {
     border: none;
   }
+  .webcam-wrapper video {
+    transform: scaleX(-1);
+  }
+
   `,
   template: `
   <div class=" px-5 pb-5 lg:xl:flex lg:xl:justify-center lg:xl:z-0">
@@ -88,7 +94,7 @@ import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
         <div
           class="bg-white shadow-md rounded-lg overflow-hidden hover:shadow-xl hover:shadow-green-300 transition-shadow duration-300">
           <div class="relative">
-            <img nz-image appLongPress (longPress)="trigger()" width="100%" [nzSrc]="photo.image" alt="photo"
+            <img nz-image appLongPress (longPress)="onLongPressTrigger()" width="100%" [nzSrc]="photo.image" alt="photo"
               class="cursor-pointer object-cover w-full h-32 xl:lg:md:h-52 transition-transform duration-300" />
 
             <div
@@ -151,7 +157,7 @@ import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
                     <nz-icon [nzType]="'folder'" />
                     <input type="text" [ngModel]="folderName()" (ngModelChange)="onFolderNameChange($event)" minlength="1" maxlength="25" placeholder="folder name" class="text-center border bg-white rounded-md px-2 -mt-12" />
                   </p>
-                  <button (click)="onSaveFolder()" class="!bg-green-300 cursor-pointer flex py-1 !-mt-1 px-1 rounded-md text-white">
+                  <button (click)="onSaveFolder()" class="bg-green-300 cursor-pointer flex py-1 -mt-3.5! px-1 rounded-md text-white">
                     <nz-icon class="!text-white" nzType="check" />
                   </button>
               </a>
@@ -177,23 +183,39 @@ import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
         <nz-tab [nzTitle]="'Settings'" class="text-end">
           <div class="px-2">
             Total Files
+            <br>
+            Hide other page content. true / false
+            <br>
+            Update content hover color
+            <br>
+
           </div>
         </nz-tab>
       </nz-tabs>
     </div>
   </div>
 
-  <nz-modal [(nzVisible)]="isVisible" nzTitle="" (nzOnCancel)="handleCancel()" (nzOnOk)="handleOk()"
-    [nzOkLoading]="isOkLoading">
+  <nz-modal
+    [(nzVisible)]="isVisible"
+    nzTitle=""
+    [nzOkLoading]="isOkLoading"
+    (nzOnOk)="handleOk()"
+    (nzOnCancel)="handleCancel()"
+    [nzFooter]="footerTpl"
+  >
     <div *nzModalContent>
       <form nz-form nzLayout="vertical" class="grid grid-cols-2 gap-x-4">
         <nz-form-item class="mt-3 col-span-2">
           <nz-form-label nzFor="proofOfPayment">
-            <nz-switch [ngModel]="capture" (ngModelChange)="onSwitch()" [nzCheckedChildren]="uploadTemplate"
-              [nzUnCheckedChildren]="cameraTemplate"></nz-switch>
+            <nz-switch
+              [ngModel]="capture"
+              (ngModelChange)="onSwitch()"
+              [nzCheckedChildren]="uploadTemplate"
+              [nzUnCheckedChildren]="cameraTemplate">
+            </nz-switch>
 
             <ng-template #cameraTemplate>
-              <nz-icon nzType="camera"></nz-icon>
+                <nz-icon nzType="camera"></nz-icon>
             </ng-template>
 
             <ng-template #uploadTemplate>
@@ -203,21 +225,42 @@ import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
 
           <nz-form-control nzErrorTip=" is required">
             <div class="flex justify-center items-center">
-              @if(capture){
-              <nz-icon nzType="camera" class="text-[20rem]" />
+              @if (capture) {
+                <div class="grid">
+                  @if(previewImageUrl()) {
+                    <img [src]="previewImageUrl()" class="w-[500px] h-[390px]" alt="">
+                  } @else {
+                    <webcam class="rounded-lg" [trigger]="$trigger" (imageCapture)="snapshot($event)"></webcam>
+                    <div class="flex gap-2">
+                      <button (click)="checkPermissions()">
+                        Grant Permissions
+                      </button>
+                      <button (click)="captureImage()">
+                        Capture
+                      </button>
+                    </div>
+                  }
+                </div>
               } @else {
-              <ic-file-upload></ic-file-upload>
+                <ic-file-upload></ic-file-upload>
               }
             </div>
           </nz-form-control>
         </nz-form-item>
       </form>
     </div>
+
   </nz-modal>
+  <ng-template #footerTpl>
+  <div class="modal-footer-center flex justify-center">
+    <button nz-button nzType="default" (click)="handleCancel()">Close</button>
+    <button nz-button nzType="primary" (click)="handleOk()">Capture</button>
+  </div>
+</ng-template>
   `,
 })
 export class MemoryListing implements OnInit {
-  capture = true;
+  capture: boolean = true;
 
 
   isVisible = false;
@@ -232,7 +275,9 @@ export class MemoryListing implements OnInit {
   createNewFolder: boolean = false;
   currentFolder: WritableSignal<null | string> = signal(null)
   isDOMLoaded: WritableSignal<boolean> = signal(false)
-
+  stream: WritableSignal<any> = signal(null)
+  trigger: Subject<void> = new Subject();
+  previewImageUrl: WritableSignal<string> = signal('')
   router = inject(Router)
   activatedRoute = inject(ActivatedRoute)
 
@@ -300,19 +345,46 @@ export class MemoryListing implements OnInit {
     this.createNewFolder = !this.createNewFolder
   }
 
-  trigger() {
+  onLongPressTrigger() {
     console.log('LONG PRESS')
   }
 
   onSaveFolder() {
     if (this.folderName()){
       this.folders = [...this.folders, {
-        name: this.folderName(), 
+        name: this.folderName(),
         info: { icon: 'folder', files: 0 },
       }]
       this.createNewFolder = false
       this.folderName.set('')
     }
+  }
+
+  checkPermissions(){
+    navigator.mediaDevices.getUserMedia({
+      video: {
+        width: 500,
+        height: 600
+      }
+    }).then((response) => {
+       this.stream.set(response)
+    }).catch(error => {
+      // TODO: Save error to the project's log file
+      console.log(error)
+    })
+  }
+
+  get $trigger(): Observable<any> {
+    return this.trigger.asObservable();
+  }
+
+  captureImage() {
+    this.trigger.next();
+  }
+
+  snapshot(event: WebcamImage){
+    const imageUrl = event.imageAsDataUrl
+    this.previewImageUrl.set(imageUrl)
   }
 
   drop(event: CdkDragDrop<string[]>) {
@@ -348,7 +420,7 @@ export class MemoryListing implements OnInit {
   }
 
   onSwitch() {
-    this.capture = false
+    this.capture = !this.capture
   }
 
   onSearch(event: any): void {
@@ -357,12 +429,14 @@ export class MemoryListing implements OnInit {
 
   handleOk(): void {
     this.isOkLoading = true;
+    switch (this.stream() !== null) {
+      case true:
+        this.checkPermissions()
+        break;
 
-    setTimeout(() => {
-      this.isVisible = false;
-      this.isOkLoading = false;
-      this.triggerConfetti();
-    }, 1500);
+      default:
+        this.captureImage()
+    }
   }
 
   triggerConfetti(): void {
@@ -376,5 +450,7 @@ export class MemoryListing implements OnInit {
 
   handleCancel(): void {
     this.isVisible = false;
+    this.stream.set(null)
+    this.previewImageUrl.set('')
   }
 }
