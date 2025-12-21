@@ -7,7 +7,7 @@ import { NzButtonModule } from 'ng-zorro-antd/button';
 import { MemoryListing } from './memory-listing';
 import { NzIconModule } from 'ng-zorro-antd/icon';
 import { NzModalModule } from 'ng-zorro-antd/modal';
-import { RouterOutlet } from '@angular/router';
+import { RouterLinkWithHref, RouterOutlet } from '@angular/router';
 import { NzLayoutModule } from 'ng-zorro-antd/layout';
 import { NzFormModule } from 'ng-zorro-antd/form';
 import { NzInputModule } from 'ng-zorro-antd/input';
@@ -19,6 +19,9 @@ import { NzTabsModule } from 'ng-zorro-antd/tabs';
 import { NzDatePickerModule } from 'ng-zorro-antd/date-picker';
 import {CdkDrag, CdkDropList} from '@angular/cdk/drag-drop';
 import { WebcamModule } from "ngx-webcam";
+import { PricingComponent } from '../pricing/pricing.component';
+import { NzTagModule } from 'ng-zorro-antd/tag';
+import { NzCardModule } from 'ng-zorro-antd/card';
 
 @NgModule({
   declarations: [
@@ -31,7 +34,6 @@ import { WebcamModule } from "ngx-webcam";
     CommonModule,
     NzImageModule,
     NzButtonModule,
-    CommonModule,
     NzIconModule,
     NzModalModule,
     NzButtonModule,
@@ -48,11 +50,14 @@ import { WebcamModule } from "ngx-webcam";
     CdkDrag,
     CdkDropList,
     NzDatePickerModule,
-    WebcamModule
-],
+    WebcamModule,
+    RouterLinkWithHref,
+    NzCardModule,
+    NzTagModule,
+  ],
   exports: [
     Settings,
-    MemoryListing
+    MemoryListing,
   ],
 })
 export class MemoryModule { }
