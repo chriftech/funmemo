@@ -54,7 +54,7 @@ import { WebcamImage } from 'ngx-webcam';
 
   `,
   template: `
-  <div class=" px-5 pb-5 lg:xl:flex lg:xl:justify-center lg:xl:z-0">
+  <div class=" md:lg:xl:px-5 pb-1 lg:xl:flex lg:xl:justify-center lg:xl:z-0">
     <div class="bg-gray-100 p-3 w-[22rem] hidden lg:xl:block">
       <div class="text-start pl-1">
         <p class="text-[14pt] border-b pb-4.5 border-b-gray-200 font-semibold !mt-1.5 text-gray-500">
