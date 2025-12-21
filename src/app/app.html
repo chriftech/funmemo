@@ -1,65 +1,71 @@
-<div class="flex bg-white justify-between py-2 pt-5 items-center  gap-[2rem] px-6 border-b border-b-gray-200 mb-10">
+<div class="flex bg-white justify-between py-2 pt-5 items-center  gap-8 px-6 border-b border-b-gray-200 mb-10">
   <img src="logo.svg" alt="Logo" [class]="collapsed ? 'h-9' : 'h-10'" />
   <div class="lg:xl:flex justify-center items-center opacity-[0.9] hidden lg:xl:visible">
     <div class="h-full backdrop-blur-lg py-5 gap-12 flex items-center justify-between px-6 rounded-xl shadow-lg">
-      <div class="text-xl font-bold text-gray-800">Home</div>
+      <div class="text-xl font-bold text-gray-800 cursor-pointer" [routerLink]="['/']">Home</div>
 
       <div class="flex space-x-5 gap-1 text-[14pt]">
-        <a class="text-gray-800 hover:text-purple-600">Memories</a>
-        <a class="text-gray-800 hover:text-purple-600">About us</a>
-        <a class="text-gray-800 hover:text-purple-600">Pricing</a> 
+        <a class="text-gray-800 hover:text-purple-400!" [routerLink]="['/']">Gallary</a>
+        <a class="text-gray-800 hover:text-purple-400!" href="#about-us">About us</a>
+        <a class="text-gray-800 hover:text-purple-400!" routerLink="/pricing">Pricing</a>
       </div>
 
       <a class="text-gray-700 hover:text-purple-600 text-lg">Login</a>
     </div>
   </div>
-  <button (click)="toggleSidebar()" class="cursor-pointer -mr-[15rem] flex justify-center items-center p-2">
+
+  <button (click)="open()" class="cursor-pointer -mr-60 flex justify-center items-center p-2">
     <nz-icon class="trigger text-lg" [nzType]="collapsed ? 'menu-unfold' : 'menu-fold'" />
   </button>
 </div>
 
-<nz-layout class="!bg-white">
-  <nz-sider [nzCollapsedWidth]="1"
-    class="!shadow-2xl fixed !bg-white !border-r !shadow-blue-300 !w-[300px] sm::invisible visible bottom-0 top-0"
-    nzCollapsible [(nzCollapsed)]="collapsed" [nzWidth]="0" [nzTrigger]="null">
-    <ul nz-menu [ngClass]="{
-      '!bg-gray-20 h-full !bg-white !fixed !w-[10.5rem]': true,
-      'hidden': collapsed,
-    }" nzMode="inline">
-      <li nz-menu-item>
-        <nz-icon nzType="ordered-list" />
-        <span class="font-bold">Gallery</span>
-      </li>
-      <li nz-menu-item>
-        <nz-icon nzType="file" />
-        <span class="font-bold">Pricing</span>
-      </li>
-      <li nz-menu-item>
-        <nz-icon nzType="file" />
-        <span class="font-bold">Upgrade</span>
-      </li>
-      <li nz-menu-item>
-        <nz-icon nzType="file" />
-        <span class="font-bold">Subscriptions</span> <!-- Display Upgrade if alrady subscribed -->
-      </li>
-      <li nz-menu-item> <!-- Display menu when not logged in -->
-        <nz-icon nzType="ordered-list" />
-        <span class="font-bold">About us</span>
-      </li>
-      <li nz-menu-item>
-        <nz-icon nzType="phone" />
-        <span class="font-bold">Support</span>
-      </li>
-    </ul>
-  </nz-sider>
+<nz-layout class="bg-white!">
   <nz-layout class="">
-    <nz-content class="bg-white md:lg:xl:px-[10rem]">
+    <nz-content class="bg-white md:px-10 lg:px-10">
       <div class="md:lg:xl:flex">
-        <router-outlet></router-outlet>
-      </div>
+      <nz-drawer
+        [nzClosable]="true"
+        [nzVisible]="visible"
+        [nzPlacement]="placement"
+        nzTitle="MemoCap"
+        (nzOnClose)="close()"
+      >
+      <ng-container *nzDrawerContent class="h-screen">
+        <div class="flex items-stretch">
+          <ul nz-menu class="w-90!">
+            <li nz-menu-item [routerLink]="['/']">
+              <nz-icon nzType="ordered-list" />
+              <span class="font-bold">Gallery</span>
+            </li>
+            <li nz-menu-item [routerLink]="['pricing']">
+              <nz-icon nzType="file" />
+              <span class="font-bold">Pricing</span>
+            </li>
+            <li nz-menu-item>
+              <nz-icon nzType="file" />
+              <span class="font-bold">Upgrade</span>
+            </li>
+            <li nz-menu-item>
+              <nz-icon nzType="file" />
+              <span class="font-bold">Subscriptions</span> <!-- Display Upgrade if alrady subscribed -->
+            </li>
+            <li nz-menu-item> <!-- Display menu when not logged in -->
+              <nz-icon nzType="ordered-list" />
+              <span class="font-bold">About us</span>
+            </li>
+            <li nz-menu-item>
+              <nz-icon nzType="phone" />
+              <span class="font-bold">Support</span>
+            </li>
+          </ul>
+        </div>
+      </ng-container>
+      </nz-drawer>
+      <router-outlet></router-outlet>
+    </div>
       <!-- <div class="py-5 flex justify-center bg-gray-400">
         <p>Ant Design © Implement By Angular</p>
       </div> -->
-    </nz-content>
+  </nz-content>
   </nz-layout>
 </nz-layout>
