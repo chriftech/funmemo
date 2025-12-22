@@ -5,7 +5,7 @@ import { CommonModule } from '@angular/common';
 import { NzModalModule, NzModalService } from 'ng-zorro-antd/modal';
 import { NzButtonModule } from 'ng-zorro-antd/button';
 import { NzImageModule, NzImageService } from 'ng-zorro-antd/image';
-import { MemoryModule } from './components/memory/memory-module';
+import { MemoryModule } from './components/core-module';
 import { NzBreadCrumbModule } from 'ng-zorro-antd/breadcrumb';
 import { NzLayoutModule } from 'ng-zorro-antd/layout';
 import { NzMenuModule } from 'ng-zorro-antd/menu';

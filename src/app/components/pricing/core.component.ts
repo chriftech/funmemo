@@ -1,11 +1,5 @@
 import { Component } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { NzCardModule } from 'ng-zorro-antd/card';
-import { NzButtonModule } from 'ng-zorro-antd/button';
-import { NzTagModule } from 'ng-zorro-antd/tag';
-import { NzIconModule } from 'ng-zorro-antd/icon';
 import { PaymentService } from '../../services/payment';
-import { NzBadgeModule } from 'ng-zorro-antd/badge';
 
 import {
   trigger,
@@ -26,15 +20,7 @@ interface PricingPlan {
 
 @Component({
   selector: 'app-pricing',
-  standalone: true,
-  imports: [
-    CommonModule,
-    NzCardModule,
-    NzButtonModule,
-    NzTagModule,
-    NzIconModule,
-    NzBadgeModule
-  ],
+  standalone: false,
   animations: [
 
     // Page fade-in

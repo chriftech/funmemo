@@ -4,12 +4,13 @@ import { Component } from '@angular/core';
   selector: 'mi-settings',
   standalone: false,
   template: `
-    <p>
-      addsettings here
-    </p>
+    <div>
+      subscriptions table here <br />
+
+    </div>
   `,
   styles: ``
 })
-export class Settings {
+export class SubscriptionListingPage {
 
 }

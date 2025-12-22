@@ -1,10 +1,10 @@
 import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule,  } from '@angular/forms';
 import { CommonModule } from '@angular/common';
-import { Settings } from './settings';
+import { Settings } from './settings/core.component';
 import { NzImageModule } from 'ng-zorro-antd/image';
 import { NzButtonModule } from 'ng-zorro-antd/button';
-import { MemoryListing } from './memory-listing';
+import { MemoryListing } from './memory/listing.component';
 import { NzIconModule } from 'ng-zorro-antd/icon';
 import { NzModalModule } from 'ng-zorro-antd/modal';
 import { RouterLinkWithHref, RouterOutlet } from '@angular/router';
@@ -13,20 +13,24 @@ import { NzFormModule } from 'ng-zorro-antd/form';
 import { NzInputModule } from 'ng-zorro-antd/input';
 import { NzUploadModule } from 'ng-zorro-antd/upload';
 import { NzSwitchModule } from 'ng-zorro-antd/switch';
-import { CoreModule } from '../../../lib/shared-components/core-module';
+import { CoreModule } from '../../lib/shared-components/core-module';
 import { NzDropDownModule } from 'ng-zorro-antd/dropdown';
 import { NzTabsModule } from 'ng-zorro-antd/tabs';
 import { NzDatePickerModule } from 'ng-zorro-antd/date-picker';
 import {CdkDrag, CdkDropList} from '@angular/cdk/drag-drop';
 import { WebcamModule } from "ngx-webcam";
-import { PricingComponent } from '../pricing/pricing.component';
 import { NzTagModule } from 'ng-zorro-antd/tag';
 import { NzCardModule } from 'ng-zorro-antd/card';
+import { SubscriptionListingPage } from './subscriptions/listing.component';
+import { PricingComponent } from './pricing/core.component';
+import {NzBadgeModule} from 'ng-zorro-antd/badge'
 
 @NgModule({
   declarations: [
     Settings,
     MemoryListing,
+    SubscriptionListingPage,
+    PricingComponent,
   ],
   imports: [
     NzSwitchModule,
@@ -54,10 +58,13 @@ import { NzCardModule } from 'ng-zorro-antd/card';
     RouterLinkWithHref,
     NzCardModule,
     NzTagModule,
+    NzBadgeModule,
   ],
   exports: [
     Settings,
     MemoryListing,
+    SubscriptionListingPage,
+    PricingComponent,
   ],
 })
 export class MemoryModule { }
