@@ -1,4 +1,5 @@
-import { Component } from "@angular/core";
+import { Component, inject } from "@angular/core";
+import { FormBuilder, Validators } from "@angular/forms";
 
 @Component({
   selector: 'login-page',
@@ -93,6 +94,18 @@ import { Component } from "@angular/core";
 })
 
 export class LoginComponent {
+  fb: FormBuilder = inject(FormBuilder);
+
+  form = this.fb.nonNullable.group({
+    email: [
+      '',
+      [
+        Validators.required,
+        Validators.pattern(/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/),
+      ],
+    ],
+    password: ['', Validators.required],
+  });
 
   email: string = '';
   password: string = '';
