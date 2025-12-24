@@ -1,5 +1,7 @@
 import { Component, inject } from "@angular/core";
 import { FormBuilder, Validators } from "@angular/forms";
+import { AuthService } from "../../services/auth";
+import { Router } from "@angular/router";
 
 @Component({
   selector: 'login-page',
@@ -95,6 +97,10 @@ import { FormBuilder, Validators } from "@angular/forms";
 
 export class LoginComponent {
   fb: FormBuilder = inject(FormBuilder);
+  authService: AuthService = inject(AuthService);
+  router = inject(Router)
+  error: boolean = false;
+
 
   form = this.fb.nonNullable.group({
     email: [
@@ -118,9 +124,20 @@ export class LoginComponent {
       rememberMe: this.rememberMe
     };
 
+    this.authService.login(loginData.email, loginData.password).subscribe({
+      next: () => {
+        this.router.navigate(['']);
+      },
+      error: (error) => {
+        this.error = true;
+        console.error('Email/Password Sign-In error:', error);
+      },
+    });
+
     console.log('Login submitted:', loginData);
 
     // TODO: call authentication service here
   }
+
 
 }
