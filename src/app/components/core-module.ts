@@ -24,6 +24,7 @@ import { NzCardModule } from 'ng-zorro-antd/card';
 import { SubscriptionListingPage } from './subscriptions/listing.component';
 import { PricingComponent } from './pricing/core.component';
 import {NzBadgeModule} from 'ng-zorro-antd/badge'
+import { NzTableModule } from 'ng-zorro-antd/table';
 
 @NgModule({
   declarations: [
@@ -59,6 +60,7 @@ import {NzBadgeModule} from 'ng-zorro-antd/badge'
     NzCardModule,
     NzTagModule,
     NzBadgeModule,
+    NzTableModule,
   ],
   exports: [
     Settings,
