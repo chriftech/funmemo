@@ -5,13 +5,37 @@ import { PricingComponent } from './components/pricing/core.component';
 import { LandingComponent } from './components/landing-page/core.component';
 import { SubscriptionListingPage } from './components/subscriptions/listing.component';
 import { LoginComponent } from './components/auth/login.component';
+import { authGuard } from './guards/auth';
 
 export const routes: Routes = [
   // { path: '', pathMatch: 'full', redirectTo: '', component: App },
-  { path: '', component:  MemoryListing},
-  { path: 'pricing', component:  PricingComponent},
-  { path: 'landing-page', component:  LandingComponent},
-  { path: 'settings', component:  Settings},
-  { path: 'subscriptions', component:  SubscriptionListingPage},
-  { path: 'login', component:  LoginComponent},
+  {
+    path: '',
+    component:  MemoryListing,
+    canActivate: [authGuard]
+  },
+  {
+    path: 'pricing',
+    component:
+    PricingComponent},
+  {
+    path: 'landing-page',
+    component: LandingComponent,
+    canActivate: [authGuard]
+  },
+  {
+    path: 'settings',
+    component: Settings,
+    canActivate: [authGuard]
+  },
+  {
+    path: 'subscriptions',
+    component: SubscriptionListingPage,
+    canActivate: [authGuard]
+  },
+  {
+    path: 'login',
+    component: LoginComponent,
+  },
+  { path: '**', redirectTo: '' },
 ];
