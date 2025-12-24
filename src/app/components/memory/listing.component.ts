@@ -77,14 +77,14 @@ import { WebcamImage } from 'ngx-webcam';
           class="pointer-events-none fixed top-0 left-0 -z-10 w-[18rem] h-[28rem] -translate-x-1/3 -translate-y-1/3 rounded-full bg-[radial-gradient(circle,_#F200FF33,_#EBFBFF)] blur-3xl opacity-100">
         </div>
         <div
-          class="pointer-events-none fixed bottom-0 right-0 -z-10 w-[4rem] h-[32rem] translate-x-1/4 translate-y-1/4 rounded-full bg-[radial-gradient(circle,_#F200FF33,_#EBFBFF)] blur-3xl opacity-80">
+          class="pointer-events-none fixed bottom-0 right-0 -z-10 w-16 h-128 translate-x-1/4 translate-y-1/4 rounded-full bg-[radial-gradient(circle,_#F200FF33,_#EBFBFF)] blur-3xl opacity-80">
         </div>
       </div>
       <div class="flex gap-4 justify-between items-center border-b border-gray-200">
-        <p class="text-xl blur-none font-bold !mt-4 z-0">Gallery</p>
+        <p class="text-xl blur-none font-bold mt-4! z-0">Gallery</p>
         <button type="button" (click)="uploadMemory()" [ngClass]="{
-          '!text-white !py-2 bg-gradient-to-br from-pink-300 to-blue-500 hover:bg-gradient-to-bl focus:ring-2 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800 font-medium rounded-base text-sm px-4 rounded-md cursor-pointer text-center leading-5 flex gap-1': true,
-          '!shadow-md !shadow-blue-500': isDOMLoaded()
+          'text-white! py-2! bg-linear-to-br from-pink-300 to-blue-500 hover:bg-linear-to-bl focus:ring-2 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800 font-medium rounded-base text-sm px-4 rounded-md cursor-pointer text-center leading-5 flex gap-1': true,
+          'shadow-md! shadow-blue-500!': isDOMLoaded()
         }"><nz-icon class="trigger" [nzType]="'upload'" /> Upload</button>
 
       </div>
