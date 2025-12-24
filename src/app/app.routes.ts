@@ -6,6 +6,7 @@ import { LandingComponent } from './components/landing-page/core.component';
 import { SubscriptionListingPage } from './components/subscriptions/listing.component';
 import { LoginComponent } from './components/auth/login.component';
 import { authGuard } from './guards/auth';
+import { SignupComponent } from './components/auth/signup.component';
 
 export const routes: Routes = [
   // { path: '', pathMatch: 'full', redirectTo: '', component: App },
@@ -37,5 +38,9 @@ export const routes: Routes = [
     path: 'login',
     component: LoginComponent,
   },
-  { path: '**', redirectTo: '' },
+  {
+    path: 'signup',
+    component: SignupComponent,
+  },
+  // { path: '**', redirectTo: '' },
 ];
