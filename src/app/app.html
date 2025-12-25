@@ -10,7 +10,9 @@
         <a class="text-gray-800 hover:text-purple-400!" [routerLink]="['pricing']">Plans</a>
       </div>
 
-      <a class="text-gray-700 hover:text-purple-600 text-lg" [routerLink]="['login']">Login</a>
+      @if (!isLoggedIn()) {
+        <a class="text-gray-700 hover:text-purple-600 text-lg" [routerLink]="['login']">Login</a>
+      }
     </div>
   </div>
 
@@ -43,11 +45,7 @@
             </li>
             <li nz-menu-item [routerLink]="['subscriptions']">
               <nz-icon nzType="file" />
-              <span class="font-bold">Upgrade</span>
-            </li>
-            <li nz-menu-item [routerLink]="['subscriptions']">
-              <nz-icon nzType="file" />
-              <span class="font-bold">Subscriptions</span> <!-- Display Upgrade if alrady subscribed -->
+              <span class="font-bold">Subscriptions</span> <!-- Display Upgrade if already subscribed -->
             </li>
             <li nz-menu-item [routerLink]="['support']">
               <nz-icon nzType="phone" />
