@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, signal } from '@angular/core';
 import {
   Auth,
   browserSessionPersistence,
@@ -22,10 +22,13 @@ import { from, Observable } from 'rxjs';
 export class AuthService {
 
   user$: Observable<any | null>;
+
   constructor(private firebaseAuth: Auth) {
     this.setSessionStoragePersistence();
     this.user$ = user(this.firebaseAuth);
   }
+
+  currentUser = signal<any | null | undefined>(undefined)
 
   private setSessionStoragePersistence(): void {
     setPersistence(this.firebaseAuth, browserSessionPersistence);

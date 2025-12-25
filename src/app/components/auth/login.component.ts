@@ -1,7 +1,8 @@
-import { Component, inject } from "@angular/core";
+import { Component, inject, TemplateRef, ViewChild } from "@angular/core";
 import { FormBuilder, Validators } from "@angular/forms";
 import { AuthService } from "../../services/auth";
 import { Router } from "@angular/router";
+import { NzNotificationComponent, NzNotificationService } from 'ng-zorro-antd/notification';
 
 @Component({
   selector: 'login-page',
@@ -70,10 +71,12 @@ import { Router } from "@angular/router";
       </div>
 
       <!-- Submit -->
+
       <button
         type="submit"
         [disabled]="loginForm.invalid"
-        class="w-full text-[14pt] py-2 rounded-xl bg-blue-600 text-white! font-semibold shadow-md hover:bg-blue-700 transition disabled:opacity-50"
+        (click)="onSubmit()"
+        class="w-full cursor-pointer text-[14pt] py-2 -mt-2! my-0 rounded-xl bg-blue-400 text-white! font-semibold shadow-md hover:bg-blue-700 hover:shadow-2xl hover:shadow-green-400 transition disabled:opacity-50"
       >
         Login
       </button>
@@ -81,7 +84,7 @@ import { Router } from "@angular/router";
     </form>
 
     <!-- Footer -->
-    <p class="mt-6 text-center text-sm text-gray-600">
+    <p class="mt-6 text-center text-sm text-gray-600 pt-3">
       Don’t have an account?
       <a routerLink="/signup" class="text-blue-600 hover:underline font-medium ml-1">
         Sign Up
@@ -96,11 +99,13 @@ import { Router } from "@angular/router";
 })
 
 export class LoginComponent {
+  @ViewChild('notificationBtnTpl', { static: true }) btnTemplate!: TemplateRef<{ $implicit: NzNotificationComponent }>;
+
   fb: FormBuilder = inject(FormBuilder);
   authService: AuthService = inject(AuthService);
+  notification = inject(NzNotificationService)
   router = inject(Router)
   error: boolean = false;
-
 
   form = this.fb.nonNullable.group({
     email: [
@@ -117,6 +122,39 @@ export class LoginComponent {
   password: string = '';
   rememberMe: boolean = false;
 
+  createNotification({type, title, message}: {type?: 'success' | 'error' | 'blank', title: string, message: string}): void {
+    switch (type) {
+      case 'error':
+        this.notification.error(
+          title,
+          message,
+          {
+            nzButton: this.btnTemplate
+          }
+        );
+        break
+
+      case 'success':
+        this.notification.success(
+          title,
+          message,
+          {
+            nzButton: this.btnTemplate
+          }
+        );
+        break
+
+      default:
+        this.notification.blank(
+          title,
+          message,
+          {
+            nzButton: this.btnTemplate
+          }
+        );
+    }
+  }
+
   onSubmit() {
     const loginData = {
       email: this.email,
@@ -126,15 +164,23 @@ export class LoginComponent {
 
     this.authService.login(loginData.email, loginData.password).subscribe({
       next: () => {
+        this.createNotification({
+          type: 'success',
+          title: 'Success',
+          message: 'Logged in successfully',
+        })
         this.router.navigate(['']);
       },
       error: (error) => {
         this.error = true;
-        console.error('Email/Password Sign-In error:', error);
+        this.createNotification({
+          type: 'error',
+          title: 'Signin Error',
+          message: 'Incorrect email or password',
+          // TODO: Do advanced error handling
+        })
       },
     });
-
-    console.log('Login submitted:', loginData);
 
     // TODO: call authentication service here
   }

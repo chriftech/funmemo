@@ -57,9 +57,11 @@
               <nz-icon nzType="phone" />
               <span class="font-bold">Settings</span>
             </li>
-            <li nz-menu-item [routerLink]="['settings']">
-              <nz-icon nzType="logout" />
-              <span class="font-bold">Logout</span>
+            <li nz-menu-item>
+              <a (click)="logout()">
+                <nz-icon nzType="logout" />
+                <span class="font-bold">Logout</span>
+              </a>
             </li>
           </ul>
         </div>
