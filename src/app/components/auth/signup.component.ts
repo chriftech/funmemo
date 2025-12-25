@@ -1,5 +1,5 @@
 import { Component, inject, input } from "@angular/core";
-import { FormBuilder, Validators } from "@angular/forms";
+import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 import { AuthService } from "../../services/auth";
 import { Router } from "@angular/router";
 
@@ -10,7 +10,8 @@ import { Router } from "@angular/router";
   <div class="w-full max-w-md bg-white rounded-2xl shadow-xl p-8">
 
     <!-- Header -->
-    <div class="flex flex-col items-center mb-6">
+    <div class="flex flex-col items-center mb-6 border-b border-b-gray-200">
+      <nz-icon mzType="lock"></nz-icon>
       <h1 class="text-2xl font-bold text-gray-800">
         Signup
       </h1>
@@ -20,73 +21,92 @@ import { Router } from "@angular/router";
     </div>
 
     <!-- Form -->
-    <form class="space-y-5" (ngSubmit)="onSubmit()">
+    <form
+      nz-form
+      [nzLayout]="'vertical'"
+      [formGroup]="signupForm"
+    class="space-y-5 pb-0! mb-0!">
 
       <!-- Email -->
-      <div>
-        <label class="block text-sm font-medium text-gray-700">
-          Email Address
-        </label>
-        <input
-          type="email"
-          name="email"
-          required
-          (ngModel)="email()"
-          placeholder="you@example.com"
-          class="mt-1 w-full text-[14pt] px-4 py-3 rounded-xl border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500"
-        />
-      </div>
+      <div class="grid grid-cols-1 gap-6">
+        <div class="">
+          <nz-form-label nzRequired nzFor="email"
+            >Email Address
+          </nz-form-label>
+          <nz-form-control nzErrorTip="Enter email address">
+            <input
+              type="email"
+              formControlName="email"
+              placeholder="my@gmail.com"
+              class="mt-1 w-full text-[14pt] px-4 py-3 rounded-xl border border-gray-300 text-gray-700! focus:outline-none focus:ring-2 focus:ring-blue-500"
+            />
+          </nz-form-control>
+        </div>
 
-      <!-- Username -->
-      <div>
-        <label class="block text-sm font-medium text-gray-700">
-          Username (Optional)
-        </label>
-        <input
-          type="text"
-          name="username"
-          required
-          (ngModel)="username()"
-          placeholder="Pic Hero"
-          class="mt-1 w-full text-[14pt] px-4 py-3 rounded-xl border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500"
-        />
-      </div>
-
-      <!-- Password -->
-      <div>
-        <label class="block text-sm font-medium text-gray-700">
-          Password
-        </label>
-        <input
-          type="password"
-          name="password"
-          required
-          (ngModel)="password()"
-          placeholder="Enter password"
-          class="mt-1 w-full text-[14pt] px-4 py-3 rounded-xl border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500"
-        />
+        <!-- Username -->
+        <div class="">
+          <nz-form-label nzFor="username"
+            >Username (option)
+          </nz-form-label>
+          <nz-form-control nzErrorTip="Enter username">
+            <input
+              type="text"
+              formControlName="username"
+              placeholder=""
+              class="mt-1 w-full text-[14pt] px-4 py-3 rounded-xl border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500"
+            />
+          </nz-form-control>
+        </div>
       </div>
 
       <!-- Password -->
-      <div>
-        <label class="block text-sm font-medium text-gray-700">
-          Password
-        </label>
-        <input
-          type="password"
-          name="password2"
-          required
-          (ngModel)="password2()"
-          placeholder="Confirm password"
-          class="mt-1 w-full text-[14pt] px-4 py-3 rounded-xl border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500"
-        />
+      <div class="grid grid-cols-2 gap-2">
+        <div class="">
+          <nz-form-item>
+            <nz-form-label nzRequired nzFor="password"
+            >Password
+          </nz-form-label>
+          <nz-form-control nzErrorTip="Re-enter your password!">
+            <nz-input-password class="rounded-xl!">
+              <nz-icon nzInputPrefix nzType="lock" />
+              <input
+                nz-input
+                  formControlName="password"
+                  placeholder="Enter password"
+                  class="mt-1 w-full text-[14pt] px-41 py-1.5! border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                />
+              </nz-input-password>
+            </nz-form-control>
+          </nz-form-item>
+        </div>
+
+        <!-- Password -->
+        <div class="">
+          <nz-form-item>
+            <nz-form-label nzRequired nzFor="password2"
+            >Confirm Password
+          </nz-form-label>
+          <nz-form-control nzErrorTip="Re-enter your password!">
+            <nz-input-password class="rounded-xl!">
+              <nz-icon nzInputPrefix nzType="lock" />
+              <input
+              nz-input
+                formControlName="password2"
+                placeholder="Re-enter password"
+                class="mt-1 w-full text-[14pt] px-41 py-1.5! border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500"
+              />
+            </nz-input-password>
+          </nz-form-control>
+        </nz-form-item>
+        </div>
       </div>
 
       <!-- Submit -->
       <button
         type="submit"
-        [disabled]="false"
-        class="w-full text-[14pt] py-2 rounded-xl bg-blue-600 text-white! font-semibold shadow-md hover:bg-blue-700 transition disabled:opacity-50"
+        [disabled]="!signupForm.valid"
+        (click)="onSubmit()"
+        class="w-full cursor-pointer text-[14pt] py-2 -mt-4! my-0 rounded-xl bg-blue-400 text-white! font-semibold shadow-md hover:bg-blue-700 hover:shadow-2xl hover:shadow-green-400 transition disabled:opacity-50"
       >
         Submit
       </button>
@@ -94,9 +114,9 @@ import { Router } from "@angular/router";
     </form>
 
     <!-- Footer -->
-    <p class="mt-6 text-center text-sm text-gray-600">
+    <p class="mt-6 text-center text-sm text-gray-600 pt-2">
       Don’t have an account?
-      <a routerLink="/login" class="text-blue-600 hover:underline font-medium ml-1">
+      <a routerLink="/login" class="text-blue-400 hover:underline font-medium ml-1">
         Take me back
       </a>
     </p>
@@ -115,7 +135,7 @@ export class SignupComponent {
   error: boolean = false;
 
 
-  form = this.fb.nonNullable.group({
+  signupForm = this.fb.group({
     username: ['', [Validators.required]],
     email: [
       '',
@@ -125,32 +145,39 @@ export class SignupComponent {
       ],
     ],
     password: ['', Validators.required],
+    password2: ['', Validators.required],
   });
 
-  username = input('');
-  email = input('');
-  password = input('');
-  password2 = input('');
+  markAllDirty(form: FormGroup) {
+  Object.values(form.controls).forEach(control => {
+    control.markAsDirty();
+    control.updateValueAndValidity();
+
+    if (control instanceof FormGroup) {
+      this.markAllDirty(control);
+    }
+  });
+}
 
   onSubmit() {
-    const signupData = {
-      username: this.username(),
-      email: this.email(),
-      password: this.password(),
-      password2: this.password2(),
-    };
+    this.markAllDirty(this.signupForm)
 
-    this.authService.signup(signupData.email, signupData.password, signupData.username).subscribe({
-      next: () => {
-        this.router.navigate(['']);
-      },
-      error: (error) => {
-        this.error = true;
-        console.error('Email/Password sign up error:', error);
-      },
-    });
+    if (this.signupForm.valid) {
+      this.authService.signup(
+        this.signupForm.value.email!,
+        this.signupForm.value.password!,
+        this.signupForm.value.username!,
+      ).subscribe({
+        next: () => {
+          this.router.navigate(['']);
+        },
+        error: (error) => {
+          this.error = true;
+          console.error('Email/Password sign up error:', error);
+        },
+      });
+    }
 
-    // TODO: call authentication service here
   }
 
 
