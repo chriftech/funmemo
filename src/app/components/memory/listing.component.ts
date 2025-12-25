@@ -228,17 +228,9 @@ import { WebcamImage } from 'ngx-webcam';
               @if (capture) {
                 <div class="grid">
                   @if(previewImageUrl()) {
-                    <img [src]="previewImageUrl()" class="w-[500px] h-[390px]" alt="">
+                    <img [src]="previewImageUrl()" class="w-[31.25rem] h-[22.2rem]" alt="">
                   } @else {
                     <webcam class="rounded-lg" [trigger]="$trigger" (imageCapture)="snapshot($event)"></webcam>
-                    <div class="flex gap-2">
-                      <button (click)="checkPermissions()">
-                        Grant Permissions
-                      </button>
-                      <button (click)="captureImage()">
-                        Capture
-                      </button>
-                    </div>
                   }
                 </div>
               } @else {
@@ -364,7 +356,7 @@ export class MemoryListing implements OnInit {
     navigator.mediaDevices.getUserMedia({
       video: {
         width: 500,
-        height: 600
+        height: 250
       }
     }).then((response) => {
        this.stream.set(response)
