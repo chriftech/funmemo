@@ -2,15 +2,15 @@
   <img src="logo.svg" alt="Logo" [class]="collapsed ? 'h-9' : 'h-10'" />
   <div class="lg:xl:flex justify-center items-center opacity-[0.9] hidden lg:xl:visible">
     <div class="h-full backdrop-blur-lg py-5 gap-12 flex items-center justify-between px-6 rounded-xl shadow-lg">
-      <div class="text-xl font-bold text-gray-800 cursor-pointer" [routerLink]="['/']">Home</div>
+      <div class="text-xl font-bold text-gray-800 cursor-pointer" [routerLink]="['/landing-page']">Home</div>
 
       <div class="flex space-x-5 gap-1 text-[14pt]">
-        <a class="text-gray-800 hover:text-purple-400!" [routerLink]="['/']">Gallary</a>
+        <a class="text-gray-800 hover:text-purple-400!" [routerLink]="['/']">Gallery</a>
         <a class="text-gray-800 hover:text-purple-400!" href="#about-us">About us</a>
-        <a class="text-gray-800 hover:text-purple-400!" routerLink="/pricing">Pricing</a>
+        <a class="text-gray-800 hover:text-purple-400!" [routerLink]="['pricing']">Plans</a>
       </div>
 
-      <a class="text-gray-700 hover:text-purple-600 text-lg">Login</a>
+      <a class="text-gray-700 hover:text-purple-600 text-lg" [routerLink]="['login']">Login</a>
     </div>
   </div>
 
@@ -22,7 +22,7 @@
 <nz-layout class="bg-white!">
   <nz-layout class="">
     <nz-content class="bg-white md:px-10 lg:px-10">
-      <div class="md:lg:xl:flex">
+      <div>
       <nz-drawer
         [nzClosable]="true"
         [nzVisible]="visible"
@@ -39,23 +39,29 @@
             </li>
             <li nz-menu-item [routerLink]="['pricing']">
               <nz-icon nzType="file" />
-              <span class="font-bold">Pricing</span>
+              <span class="font-bold">Plans</span>
             </li>
-            <li nz-menu-item>
+            <li nz-menu-item [routerLink]="['subscriptions']">
               <nz-icon nzType="file" />
               <span class="font-bold">Upgrade</span>
             </li>
-            <li nz-menu-item>
+            <li nz-menu-item [routerLink]="['subscriptions']">
               <nz-icon nzType="file" />
               <span class="font-bold">Subscriptions</span> <!-- Display Upgrade if alrady subscribed -->
             </li>
-            <li nz-menu-item> <!-- Display menu when not logged in -->
-              <nz-icon nzType="ordered-list" />
-              <span class="font-bold">About us</span>
-            </li>
-            <li nz-menu-item>
+            <li nz-menu-item [routerLink]="['support']">
               <nz-icon nzType="phone" />
               <span class="font-bold">Support</span>
+            </li>
+            <li nz-menu-item [routerLink]="['settings']">
+              <nz-icon nzType="phone" />
+              <span class="font-bold">Settings</span>
+            </li>
+            <li nz-menu-item>
+              <a (click)="logout()">
+                <nz-icon nzType="logout" />
+                <span class="font-bold">Logout</span>
+              </a>
             </li>
           </ul>
         </div>

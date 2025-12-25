@@ -5,7 +5,7 @@ import { Component } from '@angular/core';
   standalone: false,
   template: `
     <p>
-      addsettings here
+      Settings here
     </p>
   `,
   styles: ``
