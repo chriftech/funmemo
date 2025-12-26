@@ -12,5 +12,9 @@ export const environment = {
     messagingSenderId: "51829541372",
     appId: "1:51829541372:web:cf79857d4a972fef4fca79",
     measurementId: "G-C0C646HF32"
+  },
+  payment: {
+    apiKey: 'lsk_019b2cb1-4928-7bca-878e-b102f2080f38',
+    url: 'http://api.lipila.dev/api/v1/collections/mobile-money'
   }
 };
