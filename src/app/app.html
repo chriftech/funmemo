@@ -36,7 +36,7 @@
         <div class="flex items-stretch">
           <ul nz-menu class="w-90!">
             <li nz-menu-item [routerLink]="['/']">
-              <nz-icon nzType="ordered-list" />
+              <nz-icon nzType="appstore" />
               <span class="font-bold">Gallery</span>
             </li>
             <li nz-menu-item [routerLink]="['pricing']">
@@ -44,7 +44,7 @@
               <span class="font-bold">Plans</span>
             </li>
             <li nz-menu-item [routerLink]="['subscriptions']">
-              <nz-icon nzType="file" />
+              <nz-icon nzType="credit-card" />
               <span class="font-bold">Subscriptions</span> <!-- Display Upgrade if already subscribed -->
             </li>
             <li nz-menu-item [routerLink]="['support']">
@@ -52,15 +52,17 @@
               <span class="font-bold">Support</span>
             </li>
             <li nz-menu-item [routerLink]="['settings']">
-              <nz-icon nzType="phone" />
+              <nz-icon nzType="setting" />
               <span class="font-bold">Settings</span>
             </li>
-            <li nz-menu-item>
-              <a (click)="logout()">
-                <nz-icon nzType="logout" />
-                <span class="font-bold">Logout</span>
-              </a>
-            </li>
+            @if (isLoggedIn()) {
+              <li nz-menu-item>
+                <a (click)="logout()" class="text-red-400! font-normal!">
+                  <nz-icon nzType="logout" />
+                  <span class="font-bold">Logout</span>
+                </a>
+              </li>
+            }
           </ul>
         </div>
       </ng-container>
