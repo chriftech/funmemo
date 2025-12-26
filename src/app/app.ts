@@ -71,6 +71,15 @@ export class App implements OnInit {
     this.router.navigate(['login'])
   }
 
+  isLoggedIn() {
+    const user = this.authService.currentUser()
+    if (user) {
+      return true
+    } else {
+      return false
+    }
+  }
+
   open(): void {
     this.visible = true;
   }
