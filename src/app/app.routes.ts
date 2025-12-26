@@ -7,6 +7,7 @@ import { SubscriptionListingPage } from './components/subscriptions/listing.comp
 import { LoginComponent } from './components/auth/login.component';
 import { authGuard } from './guards/auth';
 import { SignupComponent } from './components/auth/signup.component';
+import { PaymentWebhook } from './components/pricing/payment-response.component';
 
 export const routes: Routes = [
   // { path: '', pathMatch: 'full', redirectTo: '', component: App },
@@ -18,7 +19,12 @@ export const routes: Routes = [
   {
     path: 'pricing',
     component:
-    PricingComponent},
+    PricingComponent
+  },
+  {
+    path: 'api/webhook/lipila',
+    component:  PaymentWebhook,
+  },
   {
     path: 'landing-page',
     component: LandingComponent,

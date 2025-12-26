@@ -27,6 +27,7 @@ import {NzBadgeModule} from 'ng-zorro-antd/badge'
 import { NzTableModule } from 'ng-zorro-antd/table';
 import { LoginComponent } from './auth/login.component';
 import { SignupComponent } from './auth/signup.component';
+import { PaymentWebhook } from './pricing/payment-response.component';
 
 @NgModule({
   declarations: [
@@ -36,6 +37,7 @@ import { SignupComponent } from './auth/signup.component';
     PricingComponent,
     LoginComponent,
     SignupComponent,
+    PaymentWebhook,
   ],
   imports: [
     NzSwitchModule,
@@ -73,6 +75,7 @@ import { SignupComponent } from './auth/signup.component';
     PricingComponent,
     LoginComponent,
     SignupComponent,
+    PaymentWebhook,
   ],
 })
 export class MemoryModule { }

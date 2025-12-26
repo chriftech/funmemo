@@ -16,10 +16,10 @@ export class PaymentService {
     });
 
     const body = {
-      referenceId: '1234512234',
+      referenceId: 'a652',
       amount: 1,
       narration: 'TEST',
-      accountNumber: '260771625841',
+      accountNumber: '0771625841',
       currency: 'ZMW',
       email: 'developersiame@gmail.com'
     };
