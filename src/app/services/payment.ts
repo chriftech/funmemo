@@ -23,8 +23,9 @@ export class PaymentService {
       email: 'developersiame@gmail.com'
     };
 
-    return this.http.post(this.apiUrl, body, { headers }).subscribe(value => {
+    this.http.post(this.apiUrl, body, { headers }).subscribe(value => {
       console.log("RESPONSE: ", value)
+      return value
     });
   }
 }

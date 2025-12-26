@@ -135,7 +135,7 @@ interface PricingPlan {
         <li>✔ Dashboard & Slack updates</li>
       </ul>
 
-      <button nz-button nzType="primary" class="mt-auto w-full mt-8">
+      <button (click)="subscribe()" nz-button nzType="primary" class="mt-auto w-full mt-8">
         Get started
       </button>
     </div>
