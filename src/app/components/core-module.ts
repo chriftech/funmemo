@@ -19,8 +19,6 @@ import { NzTabsModule } from 'ng-zorro-antd/tabs';
 import { NzDatePickerModule } from 'ng-zorro-antd/date-picker';
 import {CdkDrag, CdkDropList} from '@angular/cdk/drag-drop';
 import { WebcamModule } from "ngx-webcam";
-import { NzTagModule } from 'ng-zorro-antd/tag';
-import { NzCardModule } from 'ng-zorro-antd/card';
 import { SubscriptionListingPage } from './subscriptions/listing.component';
 import { PricingComponent } from './pricing/core.component';
 import {NzBadgeModule} from 'ng-zorro-antd/badge'
@@ -28,6 +26,9 @@ import { NzTableModule } from 'ng-zorro-antd/table';
 import { LoginComponent } from './auth/login.component';
 import { SignupComponent } from './auth/signup.component';
 import { PaymentWebhook } from './pricing/payment-response.component';
+import { NzCardModule } from 'ng-zorro-antd/card';
+import { NzTagModule } from 'ng-zorro-antd/tag';
+import { NzAlertModule } from 'ng-zorro-antd/alert';
 
 @NgModule({
   declarations: [
@@ -67,6 +68,11 @@ import { PaymentWebhook } from './pricing/payment-response.component';
     NzTagModule,
     NzBadgeModule,
     NzTableModule,
+    NzButtonModule,
+    NzCardModule,
+    NzTagModule,
+    NzModalModule,
+    NzAlertModule
   ],
   exports: [
     Settings,

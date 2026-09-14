@@ -1,25 +1,27 @@
-<div class="flex bg-white justify-between py-2 pt-5 items-center  gap-8 px-6 border-b border-b-gray-200 mb-10">
-  <img src="logo.svg" alt="Logo" [class]="collapsed ? 'h-9' : 'h-10'" />
-  <div class="lg:xl:flex justify-center items-center opacity-[0.9] hidden lg:xl:visible">
-    <div class="h-full backdrop-blur-lg py-5 gap-12 flex items-center justify-between px-6 rounded-xl shadow-lg">
-      <div class="text-xl font-bold text-gray-800 cursor-pointer" [routerLink]="['/landing-page']">Home</div>
+@if (showChrome()) {
+  <div class="flex bg-white justify-between py-2 pt-5 items-center  gap-8 px-6 border-b border-b-gray-200 mb-10">
+    <img src="logo.svg" alt="Logo" [class]="collapsed ? 'h-9' : 'h-10'" />
+    <div class="lg:xl:flex justify-center items-center opacity-[0.9] hidden lg:xl:visible">
+      <div class="h-full backdrop-blur-lg py-5 gap-12 flex items-center justify-between px-6 rounded-xl shadow-lg">
+        <div class="text-xl font-bold text-gray-800 cursor-pointer" [routerLink]="['/landing-page']">Home</div>
 
-      <div class="flex space-x-5 gap-1 text-[14pt]">
-        <a class="text-gray-800 hover:text-purple-400!" [routerLink]="['/']">Gallery</a>
-        <a class="text-gray-800 hover:text-purple-400!" href="#about-us">About us</a>
-        <a class="text-gray-800 hover:text-purple-400!" [routerLink]="['pricing']">Plans</a>
+        <div class="flex space-x-5 gap-1 text-[14pt]">
+          <a class="text-gray-800 hover:text-purple-400!" [routerLink]="['/']">Gallery</a>
+          <a class="text-gray-800 hover:text-purple-400!" href="#about-us">About us</a>
+          <a class="text-gray-800 hover:text-purple-400!" [routerLink]="['pricing']">Plans</a>
+        </div>
+
+        @if (!isLoggedIn()) {
+          <a class="text-gray-700 hover:text-purple-600 text-lg" [routerLink]="['login']">Login</a>
+        }
       </div>
-
-      @if (!isLoggedIn()) {
-        <a class="text-gray-700 hover:text-purple-600 text-lg" [routerLink]="['login']">Login</a>
-      }
     </div>
-  </div>
 
-  <button (click)="open()" class="cursor-pointer -mr-60 flex justify-center items-center p-2">
-    <nz-icon class="trigger text-lg" [nzType]="collapsed ? 'menu-unfold' : 'menu-fold'" />
-  </button>
-</div>
+    <button (click)="open()" class="cursor-pointer -mr-60 flex justify-center items-center p-2">
+      <nz-icon class="trigger text-lg" [nzType]="collapsed ? 'menu-unfold' : 'menu-fold'" />
+    </button>
+  </div>
+}
 
 <nz-layout class="bg-white!">
   <nz-layout class="">

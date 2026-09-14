@@ -8,9 +8,16 @@ import { LoginComponent } from './components/auth/login.component';
 import { authGuard } from './guards/auth';
 import { SignupComponent } from './components/auth/signup.component';
 import { PaymentWebhook } from './components/pricing/payment-response.component';
+import { CarSelectionComponent } from './components/landing-page/carSelection.component';
 
 export const routes: Routes = [
   // { path: '', pathMatch: 'full', redirectTo: '', component: App },
+  {
+    // Renders bare — `chrome: false` tells the shell to drop its header for this route.
+    path: 'test',
+    component: CarSelectionComponent,
+    data: { chrome: false },
+  },
   {
     path: '',
     component:  MemoryListing,

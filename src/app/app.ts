@@ -1,5 +1,6 @@
-import { Component, inject, OnInit,  } from '@angular/core';
-import { RouterOutlet, RouterLink, Router } from '@angular/router';
+import { Component, inject, OnInit, signal } from '@angular/core';
+import { ActivatedRoute, NavigationEnd, RouterOutlet, RouterLink, Router } from '@angular/router';
+import { filter } from 'rxjs';
 import { NzIconModule } from 'ng-zorro-antd/icon';
 import { CommonModule } from '@angular/common';
 import { NzModalModule, NzModalService } from 'ng-zorro-antd/modal';
@@ -11,6 +12,9 @@ import { NzLayoutModule } from 'ng-zorro-antd/layout';
 import { NzMenuModule } from 'ng-zorro-antd/menu';
 import { NzDrawerModule, NzDrawerPlacement } from 'ng-zorro-antd/drawer';
 import { AuthService } from './services/auth';
+import { NzCardModule } from 'ng-zorro-antd/card';
+import { NzTagModule } from 'ng-zorro-antd/tag';
+import { NzAlertModule } from 'ng-zorro-antd/alert';
 
 @Component({
   selector: 'app-root',
@@ -27,6 +31,11 @@ import { AuthService } from './services/auth';
     NzLayoutModule,
     RouterLink,
     NzDrawerModule,
+    NzButtonModule,
+    NzCardModule,
+    NzTagModule,
+    NzModalModule,
+    NzAlertModule
 ],
   providers: [
     NzImageService,
@@ -44,6 +53,13 @@ export class App implements OnInit {
 
   authService = inject(AuthService)
   router = inject(Router)
+  private activatedRoute = inject(ActivatedRoute)
+
+  /**
+   * Whether the shell's header belongs on the current page. Routes that should
+   * render bare — the car selection page, for one — opt out with `data: { chrome: false }`.
+   */
+  showChrome = signal(true);
 
   menuItems = [
     {icon: 'home', label: 'Home' },
@@ -53,6 +69,10 @@ export class App implements OnInit {
   ];
 
   ngOnInit(): void {
+    this.router.events
+      .pipe(filter((event) => event instanceof NavigationEnd))
+      .subscribe(() => this.showChrome.set(this.deepestRouteData()['chrome'] !== false));
+
     this.authService.user$.subscribe((user) => {
       if(user) {
         this.authService.currentUser.set({
@@ -63,6 +83,15 @@ export class App implements OnInit {
         this.authService.currentUser.set(null)
       }
     })
+  }
+
+  /** Route data of the leaf route, which is where the page-level flags live. */
+  private deepestRouteData(): Record<string, unknown> {
+    let route = this.activatedRoute;
+    while (route.firstChild) {
+      route = route.firstChild;
+    }
+    return route.snapshot.data;
   }
 
   logout(){
