@@ -6,8 +6,46 @@
   <base href="/">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="icon" type="image/x-icon" href="favicon.ico">
+  <style>
+    /* Full-page loader shown on refresh until the app finishes its first navigation (see App.hideAppLoader) */
+    #app-loader {
+      position: fixed;
+      inset: 0;
+      z-index: 9999;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 1.5rem;
+      background: #fff;
+      transition: opacity 300ms ease;
+    }
+    #app-loader.app-loader--hidden {
+      opacity: 0;
+      pointer-events: none;
+    }
+    #app-loader img {
+      height: 2.5rem;
+    }
+    #app-loader .app-loader__spinner {
+      width: 2.75rem;
+      height: 2.75rem;
+      border-radius: 9999px;
+      background: conic-gradient(from 0deg, transparent 0deg, #f9a8d4 120deg, #3b82f6 360deg);
+      -webkit-mask: radial-gradient(farthest-side, transparent calc(100% - 4px), #000 calc(100% - 4px));
+      mask: radial-gradient(farthest-side, transparent calc(100% - 4px), #000 calc(100% - 4px));
+      animation: app-loader-spin 0.9s linear infinite;
+    }
+    @keyframes app-loader-spin {
+      to { transform: rotate(360deg); }
+    }
+  </style>
 </head>
 <body>
+  <div id="app-loader" role="status" aria-label="Loading">
+    <img src="logo.svg" alt="Funmemo" />
+    <div class="app-loader__spinner"></div>
+  </div>
   <app-root></app-root>
 </body>
 </html>

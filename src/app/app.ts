@@ -1,6 +1,6 @@
-import { Component, inject, OnInit, signal } from '@angular/core';
-import { ActivatedRoute, NavigationEnd, RouterOutlet, RouterLink, Router } from '@angular/router';
-import { filter } from 'rxjs';
+import { Component, DOCUMENT, inject, OnInit, signal } from '@angular/core';
+import { ActivatedRoute, NavigationCancel, NavigationEnd, NavigationError, RouterOutlet, RouterLink, Router } from '@angular/router';
+import { filter, take } from 'rxjs';
 import { NzIconModule } from 'ng-zorro-antd/icon';
 import { CommonModule } from '@angular/common';
 import { NzModalModule, NzModalService } from 'ng-zorro-antd/modal';
@@ -54,6 +54,7 @@ export class App implements OnInit {
   authService = inject(AuthService)
   router = inject(Router)
   private activatedRoute = inject(ActivatedRoute)
+  private document = inject(DOCUMENT)
 
   /**
    * Whether the shell's header belongs on the current page. Routes that should
@@ -73,6 +74,14 @@ export class App implements OnInit {
       .pipe(filter((event) => event instanceof NavigationEnd))
       .subscribe(() => this.showChrome.set(this.deepestRouteData()['chrome'] !== false));
 
+    // The first navigation settling (including guard redirects) means the page is ready to show
+    this.router.events
+      .pipe(
+        filter((event) => event instanceof NavigationEnd || event instanceof NavigationCancel || event instanceof NavigationError),
+        take(1),
+      )
+      .subscribe(() => this.hideAppLoader());
+
     this.authService.user$.subscribe((user) => {
       if(user) {
         this.authService.currentUser.set({
@@ -83,6 +92,16 @@ export class App implements OnInit {
         this.authService.currentUser.set(null)
       }
     })
+  }
+
+  /** Fades out and removes the full-page loader declared in index.html. */
+  private hideAppLoader(): void {
+    const loader = this.document.getElementById('app-loader');
+    if (!loader) {
+      return;
+    }
+    loader.classList.add('app-loader--hidden');
+    loader.addEventListener('transitionend', () => loader.remove(), { once: true });
   }
 
   /** Route data of the leaf route, which is where the page-level flags live. */
