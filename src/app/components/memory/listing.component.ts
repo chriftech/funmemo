@@ -93,9 +93,16 @@ import { WebcamImage } from 'ngx-webcam';
         @for (photo of photoGallery; track photo) {
         <div
           class="bg-white shadow-md rounded-lg overflow-hidden hover:shadow-xl hover:shadow-green-300 transition-shadow duration-300">
-          <div class="relative">
+          <div class="relative isolate h-32 xl:lg:md:h-52">
+            <!-- Spinner sits behind the image and is covered once the image paints -->
+            @if (!loadedImages().has(photo.index)) {
+            <div class="absolute inset-0 -z-10 flex items-center justify-center bg-gray-100">
+              <nz-spin nzSimple></nz-spin>
+            </div>
+            }
             <img nz-image appLongPress (longPress)="onLongPressTrigger()" width="100%" [nzSrc]="photo.image" alt="photo"
-              class="cursor-pointer object-cover w-full h-32 xl:lg:md:h-52 transition-transform duration-300" />
+              (load)="onImageLoaded(photo.index)" (error)="onImageLoaded(photo.index)"
+              class="block cursor-pointer object-cover w-full h-full transition-transform duration-300" />
 
             <div
               class="absolute top-2 left-2 opacity-[0.1] !hover:shadow-2xl !hover:shadow-green-400 p-1 px-2 cursor-pointer">
@@ -270,6 +277,7 @@ export class MemoryListing implements OnInit {
   stream: WritableSignal<any> = signal(null)
   trigger: Subject<void> = new Subject();
   previewImageUrl: WritableSignal<string> = signal('')
+  loadedImages: WritableSignal<Set<number>> = signal(new Set())
   router = inject(Router)
   activatedRoute = inject(ActivatedRoute)
 
@@ -335,6 +343,10 @@ export class MemoryListing implements OnInit {
 
   onCreateFolder() {
     this.createNewFolder = !this.createNewFolder
+  }
+
+  onImageLoaded(index: number) {
+    this.loadedImages.update((loaded) => new Set(loaded).add(index))
   }
 
   onLongPressTrigger() {

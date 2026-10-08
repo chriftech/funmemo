@@ -29,6 +29,7 @@ import { PaymentWebhook } from './pricing/payment-response.component';
 import { NzCardModule } from 'ng-zorro-antd/card';
 import { NzTagModule } from 'ng-zorro-antd/tag';
 import { NzAlertModule } from 'ng-zorro-antd/alert';
+import { NzSpinModule } from 'ng-zorro-antd/spin';
 
 @NgModule({
   declarations: [
@@ -72,7 +73,8 @@ import { NzAlertModule } from 'ng-zorro-antd/alert';
     NzCardModule,
     NzTagModule,
     NzModalModule,
-    NzAlertModule
+    NzAlertModule,
+    NzSpinModule
   ],
   exports: [
     Settings,
